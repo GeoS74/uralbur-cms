@@ -1,6 +1,7 @@
 /node_modules
 /public
 /src
+/nginx
 .dockerignore
 Dockerfile
 .git

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import classNames from "classnames";
 import { simpleListConfig as dataList } from "./simplelist.config"
-import SearchForm from "../SimpleList/SearchForm/SearchForm"
+import SearchForm from "./SearchForm/SearchForm"
 import Row from "./Row/Row"
 import styles from "./styles.module.css"
 
