@@ -1,0 +1,18 @@
+.root {
+  background-color: var(--backgraund-color) !important;
+}
+
+.root p {
+
+}
+
+.root p:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.rootButton {
+  fill: var(--color);
+  transform: rotate(270deg);
+  margin-right: 10px;
+}
