@@ -1,4 +1,4 @@
-const prod = true; 
+const prod = false; 
 export default {
   catalog: {
     back: {
