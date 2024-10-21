@@ -215,3 +215,14 @@ interface IMainSlide {
   createdAt: string
   updatedAt: string
 }
+
+interface ITestimonial {
+  id: string
+  name: string
+  message: string
+  company: string
+  photo: IImage
+  isPublic: boolean
+  createdAt: string
+  updatedAt: string
+}

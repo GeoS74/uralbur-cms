@@ -44,9 +44,7 @@ export default function Navigate() {
                   </li>
                   : <></>} */}
 
-                {/* <li className="nav-item">
-                  <Link to="/catalog" className="nav-link">Каталог</Link>
-                </li> */}
+
 
                 {session.getMe()?.rank === 'admin' ?
                   <>
@@ -62,6 +60,10 @@ export default function Navigate() {
                     </li>
                   </>
                   : <></>}
+
+                <li className="nav-item">
+                  <Link to="/testimonial" className="nav-link">Отзывы</Link>
+                </li>
 
                 {/* <li className="nav-item">
                   <Link to="/catalog/download/price" className="nav-link">Прайс-лист</Link>
