@@ -13,6 +13,7 @@ import userRouter from "./user.router"
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary"
 import mainSliderRouter from "./main.slider.router"
 import testimonialRouter from "./testimonial.router"
+import priceRouter from "./price.router";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
   authRouter,
   mainSliderRouter,
   testimonialRouter,
+  priceRouter,
 ])
 
 export default <RouterProvider router={router} />

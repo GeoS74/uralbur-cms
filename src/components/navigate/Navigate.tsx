@@ -65,6 +65,10 @@ export default function Navigate() {
                   <Link to="/testimonial" className="nav-link">Отзывы</Link>
                 </li>
 
+                <li className="nav-item">
+                  <Link to="/price" className="nav-link">Прайс</Link>
+                </li>
+
                 {/* <li className="nav-item">
                   <Link to="/catalog/download/price" className="nav-link">Прайс-лист</Link>
                 </li>

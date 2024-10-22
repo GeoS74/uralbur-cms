@@ -226,3 +226,8 @@ interface ITestimonial {
   createdAt: string
   updatedAt: string
 }
+
+interface IPrice {
+  fileName: string
+  createdAt: string
+}
