@@ -231,3 +231,11 @@ interface IPrice {
   fileName: string
   createdAt: string
 }
+
+interface ITempatePage {
+  name: string
+  tplFileName: string
+  alias: string
+  title: string
+  description: string
+}

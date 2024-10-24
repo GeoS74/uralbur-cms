@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
-export default function ContactList() {
+export default function SlideList() {
   // session.subscribe('MainSliderList');
   const navigate = useNavigate();
   const theme = (useSelector((state) =>  state) as {theme: {theme: string}}).theme.theme

@@ -14,6 +14,7 @@ import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary"
 import mainSliderRouter from "./main.slider.router"
 import testimonialRouter from "./testimonial.router"
 import priceRouter from "./price.router";
+import templatePageRouter from "./template.page.router";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   mainSliderRouter,
   testimonialRouter,
   priceRouter,
+  templatePageRouter,
 ])
 
 export default <RouterProvider router={router} />
