@@ -6,7 +6,7 @@ import Head from "../Head/Head";
 
 export default function User() {
   return <>
-    <Head title="SIGNAL - Личный кабнет" description=""/>
+    <Head title="Личный кабнет" description=""/>
     <Navigate />
 
     <div className={styles.root} >
