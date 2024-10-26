@@ -1,5 +1,8 @@
 const prod = true; 
 export default {
+  node: {
+    prefix: '/admin',
+  },
   catalog: {
     back: {
       host: prod ? '' : 'http://localhost',
