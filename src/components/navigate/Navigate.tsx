@@ -51,7 +51,7 @@ export default function Navigate() {
                     <Link to="/" className="nav-link">Ц.У.П.</Link>
 
                     <li className="nav-item">
-                      <Link to="/mainpage/slider" className="dropdown-item">Слайдер</Link>
+                      <Link to="/mainpage/slider" className="nav-link">Слайдер</Link>
                     </li>
 
                     <li className="nav-item dropdown">
