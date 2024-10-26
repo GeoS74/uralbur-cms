@@ -15,7 +15,7 @@ import BackArrow from "../../BackArrow/BackArrow";
 
 
 export default function EditForm() {
-  const template = useLoaderData() as ITempatePage;
+  const contact = useLoaderData() as IContact;
 
   const [disabled, setDisabled] = useState(false)
 
@@ -28,18 +28,16 @@ export default function EditForm() {
         event,
         setDisabled,
         navigate,
-        template
+        contact
       )}
     >
       <fieldset disabled={disabled} className="form-group">
 
         <OptionalHeader />
 
-        <legend className="mt-3">Редактирование тегов</legend>
+        <legend className="mt-3">Редактирование контактов</legend>
 
-        <InputText val={template?.title} prefix="title" label="Тег title" />
-
-        <InputText val={template?.description} prefix="description" label="Тег description" />
+        <InputText val={contact.value} prefix="value" label={contact.title} />
 
         <SubmitButton />
 
@@ -53,7 +51,7 @@ function _onSubmit(
   event: React.FormEvent<HTMLFormElement>,
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   navigate: NavigateFunction,
-  template: ITempatePage
+  contact: IContact
 ) {
 
   event.preventDefault();
@@ -61,7 +59,7 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/template/pages/${template.alias}`, {
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/contact/${contact.alias}`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
@@ -71,8 +69,8 @@ function _onSubmit(
     .then(responseNotIsArray)
     .then(async response => {
       if (response.ok) {
-        const res = await response.json();
-        return navigate(`/template/page/${res.alias}`)
+        await response.json();
+        return navigate(`/contact`)
       }
       throw new Error(`response status: ${response.status}`)
     })

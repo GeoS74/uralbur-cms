@@ -239,3 +239,9 @@ interface ITempatePage {
   title: string
   description: string
 }
+
+interface IContact {
+  title: string
+  alias: string
+  value: string
+}

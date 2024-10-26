@@ -15,6 +15,7 @@ import mainSliderRouter from "./main.slider.router"
 import testimonialRouter from "./testimonial.router"
 import priceRouter from "./price.router";
 import templatePageRouter from "./template.page.router";
+import contactRouter from "./contact.router";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   testimonialRouter,
   priceRouter,
   templatePageRouter,
+  contactRouter,
 ])
 
 export default <RouterProvider router={router} />

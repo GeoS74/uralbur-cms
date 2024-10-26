@@ -70,6 +70,10 @@ export default function Navigate() {
                 </li>
 
                 <li className="nav-item">
+                  <Link to="/contact" className="nav-link">Контакты</Link>
+                </li>
+
+                <li className="nav-item">
                   <Link to="/template" className="nav-link">Шаблоны</Link>
                 </li>
 
