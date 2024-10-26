@@ -47,8 +47,7 @@ export default function SolutionEditForm() {
         <InputText errorMessage={errorMessage} val={solution?.message} prefix="message" label="Текст" />
 
         <InputText errorMessage={errorMessage} val={solution?.cssClass} prefix="cssClass" label="css класс" />
-        <small className="text-danger">ВАЖНО: для выбора css класса воспользуйтесь
-          <a href="/ionicons/cheatsheet.html" target="blank">этой библиотекой</a>
+        <small className="text-danger">ВАЖНО: для выбора css класса воспользуйтесь <a href="/ionicons/cheatsheet.html" target="blank">этой библиотекой</a>
         </small>
 
         <CheckBox val={solution?.isPublic} prefix="isPublic" label="Отображается" />

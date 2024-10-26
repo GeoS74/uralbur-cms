@@ -47,8 +47,7 @@ export default function ProgressEditForm() {
         <InputText errorMessage={errorMessage} val={progress?.message} prefix="message" label="Текст" />
 
         <InputText errorMessage={errorMessage} val={progress?.cssClass} prefix="cssClass" label="css класс" />
-        <small className="text-danger">ВАЖНО: для выбора css класса воспользуйтесь
-          <a href="/ionicons/cheatsheet.html" target="blank">этой библиотекой</a>
+        <small className="text-danger">ВАЖНО: для выбора css класса воспользуйтесь <a href="/ionicons/cheatsheet.html" target="blank">этой библиотекой</a>
         </small>
 
         <CheckBox val={progress?.isPublic} prefix="isPublic" label="Отображается" />
