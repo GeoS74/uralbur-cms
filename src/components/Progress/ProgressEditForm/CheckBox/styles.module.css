@@ -1,0 +1,5 @@
+.root input:hover,
+.root label:hover
+ {
+    cursor: pointer;
+}

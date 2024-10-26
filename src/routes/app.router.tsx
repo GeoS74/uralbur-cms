@@ -16,6 +16,8 @@ import testimonialRouter from "./testimonial.router"
 import priceRouter from "./price.router";
 import templatePageRouter from "./template.page.router";
 import contactRouter from "./contact.router";
+import progressRouter from "./progress.router";
+import solutionRouter from "./solution.router";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
   priceRouter,
   templatePageRouter,
   contactRouter,
+  progressRouter,
+  solutionRouter,
 ])
 
 export default <RouterProvider router={router} />

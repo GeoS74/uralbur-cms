@@ -49,6 +49,7 @@ export default function Navigate() {
                 {session.getMe()?.rank === 'admin' ?
                   <>
                     <Link to="/" className="nav-link">Ц.У.П.</Link>
+                    
                     <li className="nav-item dropdown">
                       <span className="nav-link dropdown-toggle" onClick={(event) => event.currentTarget.nextElementSibling?.classList.toggle("show")}>Главная страница</span>
                       <div className="dropdown-menu" onClick={(event) => event.currentTarget.classList.toggle("show")}>
@@ -56,6 +57,14 @@ export default function Navigate() {
                         <Link to="/mainpage/slider" className="dropdown-item">Слайдер</Link>
                         {/* <hr />
                       <Link to="/catalog/edit/upload" className="dropdown-item">Загрузка прайса</Link> */}
+                      </div>
+                    </li>
+
+                    <li className="nav-item dropdown">
+                      <span className="nav-link dropdown-toggle" onClick={(event) => event.currentTarget.nextElementSibling?.classList.toggle("show")}>Инфо блоки</span>
+                      <div className="dropdown-menu" onClick={(event) => event.currentTarget.classList.toggle("show")}>
+                        <Link to="/progress" className="dropdown-item">Достижения</Link>
+                        <Link to="/solutions" className="dropdown-item">Решения</Link>
                       </div>
                     </li>
                   </>
@@ -72,6 +81,7 @@ export default function Navigate() {
                 <li className="nav-item">
                   <Link to="/contact" className="nav-link">Контакты</Link>
                 </li>
+
 
                 <li className="nav-item">
                   <Link to="/template" className="nav-link">Шаблоны</Link>

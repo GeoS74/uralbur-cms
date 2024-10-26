@@ -245,3 +245,13 @@ interface IContact {
   alias: string
   value: string
 }
+
+interface IInfoBlock {
+  id: string
+  title: string
+  message: string
+  cssClass: string
+  isPublic: boolean
+  createdAt: string
+  updatedAt: string
+}

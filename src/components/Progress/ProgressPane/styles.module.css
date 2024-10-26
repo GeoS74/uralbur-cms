@@ -1,0 +1,21 @@
+.root>div {
+  display: flex;
+  flex-flow: column;
+  max-width: 1500px;
+  margin: 8px 0;
+}
+
+.root>div:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.root>div>div div{
+  padding: 10px 25px;
+}
+
+.root>div img{
+  width: 300px;
+}
+
+ 
+

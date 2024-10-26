@@ -12,12 +12,11 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import OptionalHeader from "./OptionalHeader/OptionalHeader";
 import InputText from "./InputText/InputText";
 import BackArrow from "../../BackArrow/BackArrow";
-import InputFile from "./InputFile/InputFile";
 import CheckBox from "./CheckBox/CheckBox";
 
 
-export default function SlideEditForm() {
-  const slide = useLoaderData() as IMainSlide;
+export default function ProgressEditForm() {
+  const progress = useLoaderData() as IInfoBlock;
 
   const [disabled, setDisabled] = useState(false)
   const [errorMessage, setErrorResponse] = useState<IErrorMessage>();
@@ -32,30 +31,27 @@ export default function SlideEditForm() {
         setDisabled,
         setErrorResponse,
         navigate,
-        slide
+        progress
       )}
     >
       <fieldset disabled={disabled} className="form-group">
 
-        <OptionalHeader {...slide} />
+        <OptionalHeader {...progress} />
 
-        <legend className="mt-3">{!slide ? "Добавление нового слайда" : "Изменение слайда"}</legend>
+        <legend className="mt-3">{!progress ? "Добавление нового достижения" : "Изменение достижения"}</legend>
 
-        <small className="text-danger">ВАЖНО: Размер изображения должен быть 1900х900 px</small>
 
-        {slide ?
-          <div className="mt-2">
-            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/slider/${slide?.image?.fileName}`} loading="lazy" />
-          </div>
-          : <></>}
 
-        <InputFile errorMessage={errorMessage} prefix="image"/>
+        <InputText errorMessage={errorMessage} val={progress?.title} prefix="title" label="Заголовок" />
 
-        <InputText errorMessage={errorMessage} val={slide?.title} prefix="title" label="Заголовок" />
+        <InputText errorMessage={errorMessage} val={progress?.message} prefix="message" label="Текст" />
 
-        <InputText errorMessage={errorMessage} val={slide?.message} prefix="message" label="Текст" />
+        <InputText errorMessage={errorMessage} val={progress?.cssClass} prefix="cssClass" label="css класс" />
+        <small className="text-danger">ВАЖНО: для выбора css класса воспользуйтесь
+          <a href="/ioicons/cheatsheet.html" target="blank">этой библиотекой</a>
+        </small>
 
-        <CheckBox val={slide?.isPublic} prefix="isPublic" label="Отображается" />
+        <CheckBox val={progress?.isPublic} prefix="isPublic" label="Отображается" />
 
         <SubmitButton />
 
@@ -70,7 +66,7 @@ function _onSubmit(
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorResponse: React.Dispatch<React.SetStateAction<IErrorMessage | undefined>>,
   navigate: NavigateFunction,
-  slide?: IMainSlide
+  progress?: IInfoBlock
 ) {
 
   event.preventDefault();
@@ -78,12 +74,8 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
-  if((fd.get('image') as File).size == 0) {
-    fd.delete('image')
-  }
-
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/slider/${slide?.id || ''}`, {
-    method: slide ? 'PATCH' : 'POST',
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/progress/${progress?.id || ''}`, {
+    method: progress ? 'PATCH' : 'POST',
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },
@@ -93,7 +85,7 @@ function _onSubmit(
     .then(async response => {
       if (response.ok) {
         const res = await response.json();
-        return navigate(`/mainpage/slider/page/${res.id}`)
+        return navigate(`/progress/page/${res.id}`)
       }
       else if (response.status === 400) {
         const res = await response.json()
@@ -108,10 +100,8 @@ function _onSubmit(
 
 function _getErrorResponse(error: string): IErrorMessage {
   switch (error) {
-    case `field name "image" is empty`:
-      return { field: "image", message: "Изображение не загаружено" }
-    case `bad image mime type`:
-      return { field: "image", message: "Файл должен быть картинкой" }
-    default: return { field: "image", message: error }
+    case `title is empty`:
+      return { field: "title", message: "Заголовок не должен быть пустым" }
+    default: return { field: "title", message: error }
   }
 }

@@ -16,7 +16,7 @@ export default function SearchPane({ slides }: Props) {
 
 function _makeList(slides: IMainSlide[]) {
   return slides
-    .map((s, index) => <div key={index} className="card mt-0">
+    .map((s) => <div key={s.id} className="card mt-0">
 
       <SlideOptionalHeader {...s} />
 
