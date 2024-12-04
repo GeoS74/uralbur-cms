@@ -35,11 +35,18 @@ export default function EditForm() {
 
         <OptionalHeader />
 
-        <legend className="mt-3">Редактирование тегов</legend>
+        <legend className="mt-3">Редактирование шаблона &quot;{template.name}&quot;</legend>
 
-        <InputText val={template?.title} prefix="title" label="Тег title" />
+        <InputText val={template?.meta?.title} prefix="meta[title]" label="Meta-тег title" />
+        <InputText val={template?.meta?.description} prefix="meta[description]" label="Meta-тег description" />
 
-        <InputText val={template?.description} prefix="description" label="Тег description" />
+        {
+          ["index", "product-single"].indexOf(template.alias) === -1 ?
+            <>
+              <InputText val={template?.title} prefix="title" label="Заголовок" />
+              <InputText val={template?.description} prefix="description" label="Текст" />
+            </> : <></>
+        }
 
         <SubmitButton />
 

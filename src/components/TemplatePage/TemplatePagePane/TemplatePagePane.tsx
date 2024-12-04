@@ -21,10 +21,17 @@ function _makeList(templates: ITempatePage[]) {
         <div><h5>{s.name}</h5></div>
         <div>файл: {s.tplFileName}</div>
 
-        <div>Тег title: {s.title}</div>
+        <div>Meta-тег title: {s.meta.title}</div>
+        <div>Meta-тег description: {s.meta.description}</div>
 
-         
-        <div>Тег description:{s.description}</div>
+        {
+          ["index", "product-single"].indexOf(s.alias) === -1 ?
+            <>
+               <div>Заголовок: {s.title}</div>
+               <div>Текст: {s.description}</div>
+            </> : <></>
+        }
+
       </div>
 
     </div>)

@@ -4,8 +4,8 @@ declare module "*.module.scss" {
 }
 type StyleTheme = "dark" | "light"
 interface IThemeContext {
-    theme: StyleTheme;
-    setTheme: Dispatch<SetStateAction<StyleTheme>>;
+  theme: StyleTheme;
+  setTheme: Dispatch<SetStateAction<StyleTheme>>;
 }
 
 type ServiceName = "bridge" | "mauth" | "informator" | "mnote" | "mcontent"
@@ -72,7 +72,7 @@ interface ISearchResult {
 * интерфейс объекта продукта, возвращаемого микросервисом "bridge"
 */
 interface IProduct {
-  id:number
+  id: number
   createdAt: string
   brandId: number
   brantTitle: string
@@ -116,7 +116,7 @@ interface IDocUnit {
   position: string
 }
 
-interface IDocSignatory extends IDocUnit{
+interface IDocSignatory extends IDocUnit {
   accept: boolean
 }
 
@@ -183,7 +183,7 @@ interface INews {
   isPublic: boolean
   message: string
   title: string
-  updatedAt: string    
+  updatedAt: string
 }
 
 // Получаем массив при запросе с /api/informator/user/all
@@ -248,6 +248,10 @@ interface ITempatePage {
   alias: string
   title: string
   description: string
+  meta: {
+    title: string
+    description: string
+  }
 }
 
 interface IContact {
