@@ -58,7 +58,7 @@ export default {
 }
 
 function _getSearch() {
-  return fetch(`${serviceHost("mcontent")}/api/mcontent/progress/public/search/`, {
+  return fetch(`${serviceHost("mcontent")}/api/mcontent/progress/public/`, {
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     }

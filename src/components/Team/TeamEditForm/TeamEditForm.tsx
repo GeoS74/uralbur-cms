@@ -16,8 +16,8 @@ import InputFile from "./InputFile/InputFile";
 import CheckBox from "./CheckBox/CheckBox";
 
 
-export default function TestimonialEditForm() {
-  const testimonial = useLoaderData() as ITestimonial;
+export default function TeamEditForm() {
+  const teamUnit = useLoaderData() as ITeamUnit;
 
   const [disabled, setDisabled] = useState(false)
   const [errorMessage, setErrorResponse] = useState<IErrorMessage>();
@@ -32,32 +32,30 @@ export default function TestimonialEditForm() {
         setDisabled,
         setErrorResponse,
         navigate,
-        testimonial
+        teamUnit
       )}
     >
       <fieldset disabled={disabled} className="form-group">
 
-        <OptionalHeader {...testimonial} />
+        <OptionalHeader {...teamUnit} />
 
-        <legend className="mt-3">{!testimonial ? "Добавление нового отзыва" : "Изменение отзыва"}</legend>
+        <legend className="mt-3">{!teamUnit ? "Добавление нового сотрудника" : "Изменение данных"}</legend>
 
-        <small>ВАЖНО: Рекомендуемый размер 300х300 px</small>
+        <small>ВАЖНО: Рекомендуемый размер 700х700 px</small>
 
-        {testimonial ?
+        {teamUnit ?
           <div className="mt-2">
-            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/testimonial/${testimonial?.photo?.fileName}`} loading="lazy" />
+            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/team/${teamUnit?.photo?.fileName}`} loading="lazy" />
           </div>
           : <></>}
 
         <InputFile errorMessage={errorMessage} prefix="photo" />
 
-        <InputText errorMessage={errorMessage} val={testimonial?.name} prefix="name" label="Имя" />
+        <InputText errorMessage={errorMessage} val={teamUnit?.name} prefix="name" label="Имя" />
 
-        <InputText errorMessage={errorMessage} val={testimonial?.company} prefix="company" label="Компания" />
+        <InputText errorMessage={errorMessage} val={teamUnit?.position} prefix="position" label="Должность" />
 
-        <InputText errorMessage={errorMessage} val={testimonial?.message} prefix="message" label="Текст" />
-
-        <CheckBox val={testimonial?.isPublic} prefix="isPublic" label="Отображается" />
+        <CheckBox val={teamUnit?.isPublic} prefix="isPublic" label="Отображается" />
 
         <SubmitButton />
 
@@ -72,7 +70,7 @@ function _onSubmit(
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorResponse: React.Dispatch<React.SetStateAction<IErrorMessage | undefined>>,
   navigate: NavigateFunction,
-  testimonial?: ITestimonial
+  teamUnit?: ITeamUnit
 ) {
 
   event.preventDefault();
@@ -84,8 +82,8 @@ function _onSubmit(
     fd.delete('photo')
   }
 
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/testimonial/${testimonial?.id || ''}`, {
-    method: testimonial ? 'PATCH' : 'POST',
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/team/${teamUnit?.id || ''}`, {
+    method: teamUnit ? 'PATCH' : 'POST',
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },
@@ -95,7 +93,7 @@ function _onSubmit(
     .then(async response => {
       if (response.ok) {
         const res = await response.json();
-        return navigate(`/testimonial/page/${res.id}`)
+        return navigate(`/team/page/${res.id}`)
       }
       else if (response.status === 400) {
         const res = await response.json()
@@ -116,8 +114,6 @@ function _getErrorResponse(error: string): IErrorMessage {
       return { field: "photo", message: "Файл должен быть картинкой" }
     case `name is required`:
       return { field: "name", message: "Имя обязательно к заполнению" }
-    case `message is required`:
-      return { field: "message", message: "Отзыв не может быть пустым" }
     default: return { field: "photo", message: error }
   }
 }

@@ -19,6 +19,7 @@ import templatePageRouter from "./template.page.router";
 import contactRouter from "./contact.router";
 import progressRouter from "./progress.router";
 import solutionRouter from "./solution.router";
+import teamRouter from "./team.router";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
   contactRouter,
   progressRouter,
   solutionRouter,
+  teamRouter,
 ], {
   basename: config.node.prefix
 })

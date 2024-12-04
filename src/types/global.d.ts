@@ -227,6 +227,16 @@ interface ITestimonial {
   updatedAt: string
 }
 
+interface ITeamUnit {
+  id: string
+  name: string
+  position: string
+  photo: IImage
+  isPublic: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 interface IPrice {
   fileName: string
   createdAt: string

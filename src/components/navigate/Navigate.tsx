@@ -59,16 +59,13 @@ export default function Navigate() {
                       <div className="dropdown-menu" onClick={(event) => event.currentTarget.classList.toggle("show")}>
                         <Link to="/progress" className="dropdown-item">Достижения</Link>
                         <Link to="/solutions" className="dropdown-item">Решения</Link>
+                        <Link to="/testimonial" className="dropdown-item">Отзывы</Link>
+                        <Link to="/team" className="dropdown-item">Сотрудники</Link>
                         {/* <hr />
                       <Link to="/catalog/edit/upload" className="dropdown-item">Загрузка прайса</Link> */}
                       </div>
                     </li>
                
-
-                <li className="nav-item">
-                  <Link to="/testimonial" className="nav-link">Отзывы</Link>
-                </li>
-
                 <li className="nav-item">
                   <Link to="/price" className="nav-link">Прайс</Link>
                 </li>
@@ -76,7 +73,6 @@ export default function Navigate() {
                 <li className="nav-item">
                   <Link to="/contact" className="nav-link">Контакты</Link>
                 </li>
-
 
                 <li className="nav-item">
                   <Link to="/template" className="nav-link">Шаблоны</Link>
