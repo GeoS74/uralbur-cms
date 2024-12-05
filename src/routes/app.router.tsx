@@ -20,6 +20,7 @@ import contactRouter from "./contact.router";
 import progressRouter from "./progress.router";
 import solutionRouter from "./solution.router";
 import teamRouter from "./team.router";
+import noteRouter from "./note.router";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   progressRouter,
   solutionRouter,
   teamRouter,
+  noteRouter,
 ], {
   basename: config.node.prefix
 })

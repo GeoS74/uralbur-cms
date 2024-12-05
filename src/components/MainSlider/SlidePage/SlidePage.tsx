@@ -5,7 +5,7 @@ import styles from "./styles.module.css"
 import BackArrow from "../../BackArrow/BackArrow";
 import OptionalHeader from "../SlideOptionalHeader/SlideOptionalHeader";
 
-export default function ContactPage() {
+export default function SlidePage() {
   const s = useLoaderData() as IMainSlide;
 
   return <>

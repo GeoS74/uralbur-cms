@@ -51,6 +51,10 @@ export default function Navigate() {
                     <Link to="/" className="nav-link">Ц.У.П.</Link>
 
                     <li className="nav-item">
+                      <Link to="/template" className="nav-link">Шаблоны</Link>
+                    </li>
+
+                    <li className="nav-item">
                       <Link to="/mainpage/slider" className="nav-link">Слайдер</Link>
                     </li>
 
@@ -61,24 +65,23 @@ export default function Navigate() {
                         <Link to="/solutions" className="dropdown-item">Решения</Link>
                         <Link to="/testimonial" className="dropdown-item">Отзывы</Link>
                         <Link to="/team" className="dropdown-item">Сотрудники</Link>
+                        <Link to="/note" className="dropdown-item">Статьи</Link>
                         {/* <hr />
                       <Link to="/catalog/edit/upload" className="dropdown-item">Загрузка прайса</Link> */}
                       </div>
                     </li>
-               
-                <li className="nav-item">
-                  <Link to="/price" className="nav-link">Прайс</Link>
-                </li>
 
-                <li className="nav-item">
-                  <Link to="/contact" className="nav-link">Контакты</Link>
-                </li>
+                    <li className="nav-item">
+                      <Link to="/price" className="nav-link">Прайс</Link>
+                    </li>
 
-                <li className="nav-item">
-                  <Link to="/template" className="nav-link">Шаблоны</Link>
-                </li>
+                    <li className="nav-item">
+                      <Link to="/contact" className="nav-link">Контакты</Link>
+                    </li>
 
-                </>
+
+
+                  </>
                   : <></>}
 
                 {/* <li className="nav-item">

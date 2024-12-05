@@ -17,8 +17,8 @@ import CheckBox from "./CheckBox/CheckBox";
 import TextArea from "./TextArea/TextArea";
 
 
-export default function TestimonialEditForm() {
-  const testimonial = useLoaderData() as ITestimonial;
+export default function NoteEditForm() {
+  const note = useLoaderData() as INote;
 
   const [disabled, setDisabled] = useState(false)
   const [errorMessage, setErrorResponse] = useState<IErrorMessage>();
@@ -33,32 +33,30 @@ export default function TestimonialEditForm() {
         setDisabled,
         setErrorResponse,
         navigate,
-        testimonial
+        note
       )}
     >
       <fieldset disabled={disabled} className="form-group">
 
-        <OptionalHeader {...testimonial} />
+        <OptionalHeader {...note} />
 
-        <legend className="mt-3">{!testimonial ? "Добавление нового отзыва" : "Изменение отзыва"}</legend>
+        <legend className="mt-3">{!note ? "Добавление новой статьи" : "Изменение статьи"}</legend>
 
-        <small>ВАЖНО: Рекомендуемый размер 300х300 px</small>
+        <small className="text-danger">ВАЖНО: Размер изображения должен быть 1900х900 px</small>
 
-        {testimonial ?
+        {note ?
           <div className="mt-2">
-            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/testimonial/${testimonial?.photo?.fileName}`} loading="lazy" />
+            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/note/${note?.image?.fileName}`} loading="lazy" />
           </div>
           : <></>}
 
-        <InputFile errorMessage={errorMessage} prefix="photo" />
+        <InputFile errorMessage={errorMessage} prefix="image"/>
 
-        <InputText errorMessage={errorMessage} val={testimonial?.name} prefix="name" label="Имя" />
+        <InputText errorMessage={errorMessage} val={note?.title} prefix="title" label="Заголовок" />
 
-        <InputText errorMessage={errorMessage} val={testimonial?.company} prefix="company" label="Компания" />
+        <TextArea errorMessage={errorMessage} val={note?.message} prefix="message" label="Текст" />
 
-        <TextArea errorMessage={errorMessage} val={testimonial?.message} prefix="message" label="Текст" />
-
-        <CheckBox val={testimonial?.isPublic} prefix="isPublic" label="Отображается" />
+        <CheckBox val={note?.isPublic} prefix="isPublic" label="Отображается" />
 
         <SubmitButton />
 
@@ -73,7 +71,7 @@ function _onSubmit(
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorResponse: React.Dispatch<React.SetStateAction<IErrorMessage | undefined>>,
   navigate: NavigateFunction,
-  testimonial?: ITestimonial
+  note?: INote
 ) {
 
   event.preventDefault();
@@ -81,12 +79,12 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
-  if ((fd.get('photo') as File).size == 0) {
-    fd.delete('photo')
+  if((fd.get('image') as File).size == 0) {
+    fd.delete('image')
   }
 
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/testimonial/${testimonial?.id || ''}`, {
-    method: testimonial ? 'PATCH' : 'POST',
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/note/${note?.id || ''}`, {
+    method: note ? 'PATCH' : 'POST',
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },
@@ -96,7 +94,7 @@ function _onSubmit(
     .then(async response => {
       if (response.ok) {
         const res = await response.json();
-        return navigate(`/testimonial/page/${res.id}`)
+        return navigate(`/note/page/${res.id}`)
       }
       else if (response.status === 400) {
         const res = await response.json()
@@ -111,14 +109,10 @@ function _onSubmit(
 
 function _getErrorResponse(error: string): IErrorMessage {
   switch (error) {
-    case `field name "photo" is empty`:
-      return { field: "photo", message: "Изображение не загружено" }
-    case `bad photo mime type`:
-      return { field: "photo", message: "Файл должен быть картинкой" }
-    case `name is required`:
-      return { field: "name", message: "Имя обязательно к заполнению" }
-    case `message is required`:
-      return { field: "message", message: "Отзыв не может быть пустым" }
-    default: return { field: "photo", message: error }
+    case `field name "image" is empty`:
+      return { field: "image", message: "Изображение не загаружено" }
+    case `bad image mime type`:
+      return { field: "image", message: "Файл должен быть картинкой" }
+    default: return { field: "image", message: error }
   }
 }

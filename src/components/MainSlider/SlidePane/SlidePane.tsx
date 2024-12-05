@@ -6,7 +6,7 @@ type Props = {
   slides: IMainSlide[]
 }
 
-export default function SearchPane({ slides }: Props) {
+export default function SlidePane({ slides }: Props) {
   return slides?.length ?
 
     <div className={styles.root}>

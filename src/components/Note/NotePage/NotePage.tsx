@@ -3,24 +3,22 @@ import serviceHost from "../../../libs/service.host"
 import classNames from "classnames";
 import styles from "./styles.module.css"
 import BackArrow from "../../BackArrow/BackArrow";
-import OptionalHeader from "../TestimonialOptionalHeader/TestimonialOptionalHeader";
+import OptionalHeader from "../NoteOptionalHeader/NoteOptionalHeader";
 
-export default function TestimonialPage() {
-  const s = useLoaderData() as ITestimonial;
+export default function NotePage() {
+  const s = useLoaderData() as INote;
 
   return <>
-    <BackArrow path={"/testimonial"} />
+    <BackArrow path={"/note"} />
     <div className={classNames(styles.root, "card")}>
       <OptionalHeader {...s} />
 
       <div className={classNames(styles.nested)}>
         <div>
-          <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/testimonial/${s.photo.fileName}`} loading="lazy" />
+          <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/note/${s.image.fileName}`} loading="lazy" />
         </div>
 
-        {s.name ? <div><h5>{s.name}</h5></div> : <></>}
-
-        {s.company ? <div><h5>{s.company}</h5></div> : <></>}
+        {s.title ? <div><h5>{s.title}</h5></div> : <></>}
 
         {s.message ? <div><pre>{s.message}</pre></div> : <></>}
 

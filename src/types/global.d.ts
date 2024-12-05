@@ -216,6 +216,8 @@ interface IMainSlide {
   updatedAt: string
 }
 
+interface INote extends IMainSlide {}
+
 interface ITestimonial {
   id: string
   name: string

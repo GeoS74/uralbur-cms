@@ -29,7 +29,7 @@ function _makeList(testimonials: ITestimonial[]) {
 
         {s.company ? <div><h5>{s.company}</h5></div> : <></>}
 
-        {s.message ? <div>{s.message}</div> : <></>}
+        {s.message ? <div><pre>{s.message}</pre></div> : <></>}
 
         <div>Отображается на странице: {s.isPublic ? "да" : "нет"}</div>
       </div>
