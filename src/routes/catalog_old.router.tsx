@@ -1,16 +1,16 @@
 import { redirect, LoaderFunctionArgs } from "react-router-dom";
 import { responseNotIsArray } from "../middleware/response.validator";
 
-import Catalog from "../components/catalog/Catalog"
-import Search from "../components/catalog/Search/Search"
+import Catalog from "../components/catalog_old/Catalog"
+import Search from "../components/catalog_old/Search/Search"
 import SimpleList from "../components/SimpleList/SimpleList"
-import UploadPrice from "../components/catalog/UploadPrice/UploadPrice"
-import DownloadPrice from "../components/catalog/DownloadPrice/DownloadPrice";
+import UploadPrice from "../components/catalog_old/UploadPrice/UploadPrice"
+import DownloadPrice from "../components/catalog_old/DownloadPrice/DownloadPrice";
 import serviceHost from "../libs/service.host"
 import fetchWrapper from "../libs/fetch.wrapper"
 import tokenManager from "../libs/token.manager"
 import session from "../libs/token.manager"
-import ProductPage from "../components/catalog/ProductPage/ProductPage";
+import ProductPage from "../components/catalog_old/ProductPage/ProductPage";
 
 export default {
   path: "/catalog",

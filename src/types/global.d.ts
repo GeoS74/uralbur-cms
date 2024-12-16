@@ -271,3 +271,12 @@ interface IInfoBlock {
   createdAt: string
   updatedAt: string
 }
+
+interface ICatalogLevel {
+  id: string
+  title: string
+  parent: string | null
+  createdAt: string
+  updatedAt: string
+  childs: ICatalogLevel[]
+}

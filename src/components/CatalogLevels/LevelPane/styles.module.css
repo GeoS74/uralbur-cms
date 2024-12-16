@@ -1,0 +1,11 @@
+.root ul {
+  list-style-type: disc;
+}
+.root ul li {
+  margin: 15px 0;
+}
+
+.root ul li:hover {
+  cursor: pointer;
+}
+

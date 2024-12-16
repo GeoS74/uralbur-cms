@@ -71,6 +71,16 @@ export default function Navigate() {
                       </div>
                     </li>
 
+                    <li className="nav-item dropdown">
+                      <span className="nav-link dropdown-toggle" onClick={(event) => event.currentTarget.nextElementSibling?.classList.toggle("show")}>Каталог</span>
+                      <div className="dropdown-menu" onClick={(event) => event.currentTarget.classList.toggle("show")}>
+                        <Link to="/catalog/levels" className="dropdown-item">Уровни</Link>
+                        <Link to="/catalog/positions" className="dropdown-item">Позиции</Link>
+                        {/* <hr />
+                      <Link to="/catalog/edit/upload" className="dropdown-item">Загрузка прайса</Link> */}
+                      </div>
+                    </li>
+
                     <li className="nav-item">
                       <Link to="/price" className="nav-link">Прайс</Link>
                     </li>

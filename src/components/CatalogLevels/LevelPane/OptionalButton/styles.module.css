@@ -1,0 +1,15 @@
+.root {
+  margin-left: 15px;
+}
+
+.svg {
+  margin-right: 15px;
+  fill: var(--color);
+  opacity: 0.6;
+  transition: transform 0.3s;
+}
+
+.svg:hover{
+  cursor: pointer;
+  opacity: 1;
+}
