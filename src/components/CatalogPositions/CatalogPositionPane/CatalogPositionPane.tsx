@@ -11,7 +11,7 @@ export default function CatalogPositionPane({ positions }: Props) {
 
     <div className={styles.root}>
       {_makeList(positions)}
-    </div> : <div>позиции не добавлены</div>
+    </div> : <div>позиции отсутствуют</div>
 }
 
 function _makeList(positions: ICatalogPosition[]) {

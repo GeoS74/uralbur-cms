@@ -18,7 +18,13 @@ export default {
     {
       index: true,
       element: <CatalogPositionList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
+      loader: () => fetchWrapper([_getSearch, _getLevels])
+        .then(response => {
+          if (Array.isArray(response)) {
+            return Promise.all(response.map(async r => await r.json()))
+          }
+        })
+        .catch(() => redirect('/auth'))
         .finally(() => session.start())
     },
     {
