@@ -22,6 +22,7 @@ import solutionRouter from "./solution.router";
 import teamRouter from "./team.router";
 import noteRouter from "./note.router";
 import catalogLevelRouter from "./catalog.level.router";
+import catalogPositionRouter from "./catalog.position.router";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
   teamRouter,
   noteRouter,
   catalogLevelRouter,
+  catalogPositionRouter,
 ], {
   basename: config.node.prefix
 })

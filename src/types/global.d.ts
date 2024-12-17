@@ -280,3 +280,17 @@ interface ICatalogLevel {
   updatedAt: string
   childs: ICatalogLevel[]
 }
+
+interface ICatalogPosition {
+  id: string
+  title: string
+  article: string
+  isPublic: boolean
+  image: IImage
+  level: {
+    id: string
+    title: string
+  }
+  createdAt: string
+  updatedAt: string
+}

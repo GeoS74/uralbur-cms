@@ -37,7 +37,7 @@ export default function LevelEditForm() {
 
         <OptionalHeader createdAt={currentLevel?.createdAt} />
 
-        <legend className="mt-3">{!currentLevel ? "Добавление нового уровня" : "Изменение уровня"}</legend>
+        <legend className="mt-3">{!currentLevel ? "Добавление нового раздела" : "Изменение раздела"}</legend>
 
         <InputText errorMessage={errorMessage} val={currentLevel?.title} prefix="title" label="Заголовок" />
 
@@ -68,7 +68,6 @@ function _onSubmit(
   setDisabled(true);
 
   const fd = new FormData(event.currentTarget);
-  console.log(fd)
   if(!fd.get('parent')) {
     fd.delete('parent')
   }

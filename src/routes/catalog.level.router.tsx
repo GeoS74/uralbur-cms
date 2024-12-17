@@ -25,12 +25,12 @@ export default {
       path: "/catalog/levels/create",
       element: <LevelEditForm />,
       loader: () => fetchWrapper(_getSearch)
-      .then(responseNotIsArray)
-      .then(async response => {
-        const res = await response.json();
-        return [undefined, res]
-      })
-      .finally(() => session.start()),
+        .then(responseNotIsArray)
+        .then(async response => {
+          const res = await response.json();
+          return [undefined, res]
+        })
+        .finally(() => session.start()),
     },
     {
       path: "/catalog/levels/edit/:id",

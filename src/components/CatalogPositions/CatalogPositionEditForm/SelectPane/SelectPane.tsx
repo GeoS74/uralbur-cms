@@ -21,7 +21,7 @@ export default function SelectPane({ prefix, levels, val, errorMessage, label }:
         id={`${prefix}Input`}
         defaultValue={val || ""}
       >
-        <option value="">Выберите раздел</option>
+        <option value="">Выберите уровень</option>
         {_makeOptions(levels, val)}
       </select>
 
