@@ -15,7 +15,7 @@ import BackArrow from "../../BackArrow/BackArrow";
 import SelectPane from "./SelectPane/SelectPane";
 
 export default function LevelEditForm() {
-  const [currentLevel, levels] = useLoaderData() as [ICatalogLevel, ICatalogLevel[]];
+  const [currentLevel, levels] = useLoaderData() as [ICatalogLevel | undefined, ICatalogLevel[]];
 
   const [disabled, setDisabled] = useState(false);
   const [errorMessage, setErrorResponse] = useState<IErrorMessage>();
@@ -35,7 +35,7 @@ export default function LevelEditForm() {
     >
       <fieldset disabled={disabled} className="form-group">
 
-        <OptionalHeader {...currentLevel} />
+        <OptionalHeader createdAt={currentLevel?.createdAt} />
 
         <legend className="mt-3">{!currentLevel ? "Добавление нового уровня" : "Изменение уровня"}</legend>
 
@@ -68,6 +68,10 @@ function _onSubmit(
   setDisabled(true);
 
   const fd = new FormData(event.currentTarget);
+  console.log(fd)
+  if(!fd.get('parent')) {
+    fd.delete('parent')
+  }
 
   fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/level/${level?.id || ''}`, {
     method: level ? 'PATCH' : 'POST',

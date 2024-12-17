@@ -3,7 +3,7 @@ import { redirect, LoaderFunctionArgs } from "react-router-dom";
 import serviceHost from "../libs/service.host"
 import fetchWrapper from "../libs/fetch.wrapper"
 import tokenManager from "../libs/token.manager"
-// import { responseNotIsArray } from "../middleware/response.validator";
+import { responseNotIsArray } from "../middleware/response.validator";
 import session from "../libs/token.manager";
 
 import CatalogLevels from "../components/CatalogLevels/CatalogLevels";
@@ -24,20 +24,17 @@ export default {
     {
       path: "/catalog/levels/create",
       element: <LevelEditForm />,
-      loader: () => session.start(),
+      loader: () => fetchWrapper(_getSearch)
+      .then(responseNotIsArray)
+      .then(async response => {
+        const res = await response.json();
+        return [undefined, res]
+      })
+      .finally(() => session.start()),
     },
     {
       path: "/catalog/levels/edit/:id",
       element: <LevelEditForm />,
-      // loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getSearch)
-      //   .then(responseNotIsArray)
-      //   .then(async res => ({
-      //     currentId: params.id,
-      //     levels: await res.json()
-      //   }))
-      //   .catch(() => redirect('/auth'))
-      //   .finally(() => session.start())
-
       loader: ({ params }: LoaderFunctionArgs) => fetchWrapper([
         () => _getLevel(params.id),
         () => _getSearch()

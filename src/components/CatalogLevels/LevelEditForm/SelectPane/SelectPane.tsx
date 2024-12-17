@@ -16,8 +16,10 @@ export default function SelectPane({ prefix, levels, val, errorMessage, label }:
   return <div className={classNames(styles.root, "mb-4")}>
     <div className="form-group">
       <label htmlFor={`${prefix}Input`} className="form-label mt-4">{label || ""}</label>
-      <select name={`${prefix}`} className="form-select btn-outline-light mt-2" id={`${prefix}Input`}
-        defaultValue={val || undefined}
+      <select className="form-select btn-outline-light mt-2"
+        name={`${prefix}`}
+        id={`${prefix}Input`}
+        defaultValue={val || ""}
       >
         <option value="">Выберите уровень</option>
         {_makeOptions(levels, val)}
@@ -36,7 +38,7 @@ function _makeOptions(levels: ICatalogLevel[], val?: string | null, depth = 1) {
     result.push(<option
       value={levels[i].id}
       key={levels[i].id}
-      selected={levels[i].parent === val}
+      // selected={!!val && levels[i].parent === val}
     >{_makePrefix(depth)}{levels[i].title}</option>);
 
     if (levels[i].childs.length) {
