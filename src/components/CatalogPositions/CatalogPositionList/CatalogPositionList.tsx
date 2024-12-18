@@ -16,7 +16,17 @@ export default function CatalogPositionList() {
   const [positions, levels] = useLoaderData() as [ICatalogPosition[], ICatalogLevel[]];
 
   const [searchPositions, setSearchPositions] = useState<ICatalogPosition[]>(positions);
-  const [showNextButton, setShowNextButton] = useState(false);
+  
+  // BUG DETECTED 
+  // при удалении элемента из общего списка происходит прерадресация на '/catalog/positions'
+  // массив 'position' при этом изменяется, но переинициализации useState<ICatalogPosition[]>(positions) не произойдёт
+  // это приводит к тому, что удалённый элемент остаётся на экране,
+  // чтобы изменить это поведение добавлено условие:
+  if(positions.length !== searchPositions.length) {
+    setSearchPositions(positions);
+  }
+  
+  const [showNextButton, setShowNextButton] = useState(!!positions.length);
   const [lastQuery, setLastQuery] = useState("");
 
   return <div className={styles.root} >

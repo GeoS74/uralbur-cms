@@ -15,6 +15,7 @@ import BackArrow from "../../BackArrow/BackArrow";
 import InputFile from "./InputFile/InputFile";
 import CheckBox from "./CheckBox/CheckBox";
 import SelectPane from "./SelectPane/SelectPane";
+import TextArea from "./TextArea/TextArea";
 
 
 export default function SlideEditForm() {
@@ -62,6 +63,8 @@ export default function SlideEditForm() {
         <InputText errorMessage={errorMessage} val={position?.title} prefix="title" label="Наименование" />
 
         <InputText errorMessage={errorMessage} val={position?.article} prefix="article" label="Артикл" />
+
+        <TextArea errorMessage={errorMessage} val={position?.description} prefix="description" label="Описание" />
 
         <CheckBox val={position?.isPublic === undefined ? true : position.isPublic} prefix="isPublic" label="Отображается" />
 

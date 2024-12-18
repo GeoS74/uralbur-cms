@@ -1,0 +1,7 @@
+.root input {
+    border: solid 2px var(--color);
+}
+.root textarea {
+    border: solid 1px var(--color);
+    height: 150px;
+  }

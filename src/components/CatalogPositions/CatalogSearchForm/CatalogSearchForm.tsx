@@ -54,10 +54,10 @@ async function onSubmit(
 
   setDisabled(true)
 
-  const query = `?search=${fd.get('search')}&limit=${limit}&level=${fd.get('level')}`
+  const query = `search=${fd.get('search')}&limit=${limit}&level=${fd.get('level')}`
   setLastQuery(query);
   
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/${query}`, {
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/?${query}`, {
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },

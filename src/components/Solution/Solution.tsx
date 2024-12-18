@@ -11,6 +11,7 @@ export default function Solution() {
         <div className={styles.root} >
             <h1>Решения</h1>
             <hr />
+            <i><small>Подсказка: в шаблоне должно быть минимум 3 элемента</small></i>
             <Outlet />
         </div>
     </>

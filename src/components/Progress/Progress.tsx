@@ -11,6 +11,7 @@ export default function Progress() {
         <div className={styles.root} >
             <h1>Достижения</h1>
             <hr />
+            <i><small>Подсказка: в шаблоне должно отображаться 4 элемента</small></i>
             <Outlet />
         </div>
     </>

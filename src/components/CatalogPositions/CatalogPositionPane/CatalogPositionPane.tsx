@@ -28,6 +28,7 @@ function _makeList(positions: ICatalogPosition[]) {
         {s.level.title ? <div>раздел каталога: {s.level.title}</div> : <></>}
         {s.title ? <div><h5>{s.title}</h5></div> : <></>}
         {s.article ? <div><h5>{s.article}</h5></div> : <></>}
+        {s.description ? <div>описание:<pre>{s.description}</pre></div> : <></>}
 
         <div>Отображается на странице: {s.isPublic ? "да" : "нет"}</div>
       </div>

@@ -37,7 +37,7 @@ function onSubmit(
 
   setDisabled(true);
 
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/${lastQuery}&last=${lastId}`, {
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/?${lastQuery}&last=${lastId}`, {
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },
@@ -46,6 +46,7 @@ function onSubmit(
     .then(async response => {
       if (response.ok) {
         const res = await response.json()
+   
         setSearchPositions(res)
 
         if (!res.length) {
