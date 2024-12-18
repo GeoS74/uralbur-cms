@@ -17,6 +17,9 @@ export default function CatalogPositionList() {
 
   const [searchPositions, setSearchPositions] = useState<ICatalogPosition[]>(positions);
   
+  const [showNextButton, setShowNextButton] = useState(!!positions.length);
+  const [lastQuery, setLastQuery] = useState("");
+
   // BUG DETECTED 
   // при удалении элемента из общего списка происходит прерадресация на '/catalog/positions'
   // массив 'position' при этом изменяется, но переинициализации useState<ICatalogPosition[]>(positions) не произойдёт
@@ -24,10 +27,8 @@ export default function CatalogPositionList() {
   // чтобы изменить это поведение добавлено условие:
   if(positions.length !== searchPositions.length) {
     setSearchPositions(positions);
+    setShowNextButton(!!positions.length);
   }
-  
-  const [showNextButton, setShowNextButton] = useState(!!positions.length);
-  const [lastQuery, setLastQuery] = useState("");
 
   return <div className={styles.root} >
 
@@ -49,7 +50,7 @@ export default function CatalogPositionList() {
       setShowNextButton={setShowNextButton}
       showNextButton={showNextButton}
       lastQuery={lastQuery}
-      lastId={searchPositions[searchPositions.length - 1]?.id}
+      lastId={searchPositions.length ? searchPositions[searchPositions.length - 1]?.id : ''}
     />
   </div>
 }
