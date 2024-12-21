@@ -66,7 +66,8 @@ async function onSubmit(
     .then(async response => {
       setShowNextButton(true)
       if (response.ok) {
-        const res = await response.json()
+        const res = await response.json();
+
         setSearchPositions(res)
 
         setShowNextButton(!!res.length)

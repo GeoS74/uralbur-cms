@@ -11,29 +11,37 @@ import classNames from "classnames";
 export default function CatalogPositionList() {
   // session.subscribe('CatalogPositionList');
   const navigate = useNavigate();
-  const theme = (useSelector((state) => state) as { theme: { theme: string } }).theme.theme
+  const theme = (useSelector((state) => state) as { theme: { theme: string } }).theme.theme;
 
   const [positions, levels] = useLoaderData() as [ICatalogPosition[], ICatalogLevel[]];
 
   const [searchPositions, setSearchPositions] = useState<ICatalogPosition[]>(positions);
-  
+
   const [showNextButton, setShowNextButton] = useState(!!positions.length);
   const [lastQuery, setLastQuery] = useState("");
 
   // BUG DETECTED 
   // при удалении элемента из общего списка происходит прерадресация на '/catalog/positions'
-  // массив 'position' при этом изменяется, но переинициализации useState<ICatalogPosition[]>(positions) не произойдёт
+  // компонент будет сразу отрисован со старыми значениями 'position', т.к. useLoaderData сработает асинхронно,
+  // а компонент уже был отрисован
+  // при этом переинициализации useState<ICatalogPosition[]>(positions) не произойдёт
   // это приводит к тому, что удалённый элемент остаётся на экране,
   // чтобы изменить это поведение добавлено условие:
-  if(positions.length !== searchPositions.length) {
-    setSearchPositions(positions);
-    setShowNextButton(!!positions.length);
-  }
+  // console.log('render')
+  // console.log(JSON.stringify(positions) !== JSON.stringify(searchPositions));
+
+  // const l = useLocation();
+  // console.log(l.search)
+  // console.log(positions === searchPositions)
+  // if(positions !== searchPositions) {
+  //   setSearchPositions(positions);
+  // }
+
 
   return <div className={styles.root} >
 
     <CatalogSearchForm
-      limit={1}
+      limit={25}
       levels={levels}
       setSearchPositions={setSearchPositions}
       setShowNextButton={setShowNextButton}

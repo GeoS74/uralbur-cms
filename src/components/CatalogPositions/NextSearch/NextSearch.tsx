@@ -37,7 +37,7 @@ function onSubmit(
 
   setDisabled(true);
 
-  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/?${lastQuery}&last=${lastId}`, {
+  fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/public/?last=${lastId}${lastQuery ? '&'+lastQuery : ''}`, {
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     },
