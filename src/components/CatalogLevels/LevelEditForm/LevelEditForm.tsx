@@ -43,7 +43,8 @@ export default function LevelEditForm() {
 
         <SelectPane errorMessage={errorMessage}
           levels={levels}
-          val={currentLevel?.parent}
+          parentId={currentLevel?.parent}
+          currentId={currentLevel?.id}
           prefix="parent"
           label="Верхний уровень" />
 
@@ -98,7 +99,11 @@ function _onSubmit(
 function _getErrorResponse(error: string): IErrorMessage {
   switch (error) {
     case `title is empty`:
-      return { field: "title", message: "Название уровня не может быть пустым" }
+      return { field: "title", message: "Название уровня не может быть пустым" };
+    case `parent not exists`:
+      return { field: "parent", message: "Раздела не существует" }
+    case `cannot be subordinated to oneself or nested level`:
+      return { field: "parent", message: "Раздела не может быть подчинён себе или дочернему элементу" }
     default: return { field: "title", message: error }
   }
 }

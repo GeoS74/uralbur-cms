@@ -7,22 +7,23 @@ import styles from "./styles.module.css";
 type Props = {
   prefix: string,
   levels: ICatalogLevel[]
-  val?: string | null
+  currentId?: string
+  parentId?: string | null
   errorMessage?: IErrorMessage
   label?: string
 }
 
-export default function SelectPane({ prefix, levels, val, errorMessage, label }: Props) {
+export default function SelectPane({ prefix, levels, parentId, currentId, errorMessage, label }: Props) {
   return <div className={classNames(styles.root, "mb-4")}>
     <div className="form-group">
       <label htmlFor={`${prefix}Input`} className="form-label mt-4">{label || ""}</label>
       <select className="form-select btn-outline-light mt-2"
         name={`${prefix}`}
         id={`${prefix}Input`}
-        defaultValue={val || ""}
+        defaultValue={parentId || ""}
       >
         <option value="">Выберите раздел</option>
-        {_makeOptions(levels, val)}
+        {_makeOptions(levels, currentId)}
       </select>
 
       {errorMessage?.field === prefix ? <ErrorMessage errorMessage={errorMessage.message} /> : <></>}
@@ -31,18 +32,19 @@ export default function SelectPane({ prefix, levels, val, errorMessage, label }:
   </div>
 }
 
-function _makeOptions(levels: ICatalogLevel[], val?: string | null, depth = 1) {
+function _makeOptions(levels: ICatalogLevel[], currentId?: string, depth = 1, dis = false) {
   const result: JSX.Element[] = [];
 
   for (let i = 0; i < levels.length; i++) {
     result.push(<option
       value={levels[i].id}
       key={levels[i].id}
+      disabled={dis || levels[i].id === currentId}
       // selected={!!val && levels[i].parent === val}
     >{_makePrefix(depth)}{levels[i].title}</option>);
 
     if (levels[i].childs.length) {
-      result.push(..._makeOptions(levels[i].childs, val, depth + 1));
+      result.push(..._makeOptions(levels[i].childs, currentId, depth + 1, dis || levels[i].id === currentId));
     }
   }
 

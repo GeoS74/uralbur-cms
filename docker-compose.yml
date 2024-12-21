@@ -3,7 +3,7 @@ services:
   mauth_app:
     image: "geos74/mauth:1.0.1"
     environment:
-      - NODE_ENV=prod
+      - NODE_ENV=dev
       - SERVER_PORT=3001
       - DB_USER=mauth
       - DB_HOST=db_mauth
@@ -28,7 +28,7 @@ services:
   mcontent_app:
     image: "geos74/mcontent:0.0.1"
     environment:
-      - NODE_ENV=prod
+      - NODE_ENV=dev
       - SERVER_PORT=3020
       - DB_USER=root
       - DB_PASS=passwordXXX
@@ -38,8 +38,7 @@ services:
       - JWT_CHECK=true
       - JWT_SECRET_KEY=secret_key
     volumes:
-      - user-avatar-mcontent:/mcontent/files/photo
-      - slider-mcontent:/mcontent/files/images/slider
+      - files-mcontent:/mcontent/files
       - init-db-mcontent:/mcontent/libs/db.init
   db_mcontent:
     image: "mongo"
@@ -51,7 +50,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=passwordXXX
       - MONGO_INITDB_DATABASE=admin
   uralbur:
-    image: "geos74/uralbur:0.0.1"
+    image: "geos74/uralbur-cms:0.0.1"
     ports:
       - "8080:80"
     volumes:
@@ -61,5 +60,4 @@ volumes:
   db-mauth:
   db-mcontent:
   init-db-mcontent:
-  user-avatar-mcontent:
-  slider-mcontent:
+  files-mcontent:
