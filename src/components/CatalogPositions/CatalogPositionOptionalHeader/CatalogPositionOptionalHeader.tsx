@@ -7,9 +7,15 @@ import { date } from "../../../libs/formatter";
 
 import { ReactComponent as IconEdit } from "./icons/wrench.svg";
 import { ReactComponent as IconDelete } from "./icons/trash.svg";
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
 
-export default function OptionalHeader({ id, createdAt }: ICatalogPosition) {
+type Props = {
+  id: string
+  createdAt: string
+  _updatePositions: () => boolean // читай про эту функцию в readme к компоненте CatalogPosition
+}
+
+export default function OptionalHeader({ id, createdAt, _updatePositions }: Props) {
   const navigate = useNavigate();
 
   return <div className={styles.root}>
@@ -20,17 +26,20 @@ export default function OptionalHeader({ id, createdAt }: ICatalogPosition) {
       <IconEdit className={styles.svg}
         onClick={() => navigate(`/catalog/positions/edit/${id}`)}
       />
-
       <IconDelete className={styles.svg}
-        onClick={async () => {
-          // ninja code ;)
-          await _deleteSlide(id) ? navigate(`/catalog/positions`) : null;
-        }} />
+
+       // ninja code ;)
+        onClick={async () => _deletePosition(id)
+          .then(res => {
+            if (res) {
+              _updatePositions() ? navigate(`/catalog/positions`) : null;
+            }
+          })} />
     </div>
   </div>
 }
 
-async function _deleteSlide(id: string) {
+async function _deletePosition(id: string): Promise<boolean> {
   if (!confirm('Удалить позицию?')) {
     return false;
   }

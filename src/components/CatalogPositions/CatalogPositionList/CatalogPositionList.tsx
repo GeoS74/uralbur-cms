@@ -17,26 +17,8 @@ export default function CatalogPositionList() {
 
   const [searchPositions, setSearchPositions] = useState<ICatalogPosition[]>(positions);
 
-  const [showNextButton, setShowNextButton] = useState(!!positions.length);
+  const [showNextButton, setShowNextButton] = useState(!!searchPositions.length);
   const [lastQuery, setLastQuery] = useState("");
-
-  // BUG DETECTED 
-  // при удалении элемента из общего списка происходит прерадресация на '/catalog/positions'
-  // компонент будет сразу отрисован со старыми значениями 'position', т.к. useLoaderData сработает асинхронно,
-  // а компонент уже был отрисован
-  // при этом переинициализации useState<ICatalogPosition[]>(positions) не произойдёт
-  // это приводит к тому, что удалённый элемент остаётся на экране,
-  // чтобы изменить это поведение добавлено условие:
-  // console.log('render')
-  // console.log(JSON.stringify(positions) !== JSON.stringify(searchPositions));
-
-  // const l = useLocation();
-  // console.log(l.search)
-  // console.log(positions === searchPositions)
-  // if(positions !== searchPositions) {
-  //   setSearchPositions(positions);
-  // }
-
 
   return <div className={styles.root} >
 
@@ -51,7 +33,7 @@ export default function CatalogPositionList() {
     <button type="button" className={classNames(`btn btn-outline-${theme === 'light' ? 'primary' : 'light'} mt-4 mb-4`)}
       onClick={() => navigate(`/catalog/positions/create`)} >Добавить позицию</button>
 
-    <CatalogPositionPane positions={searchPositions} />
+    <CatalogPositionPane positions={searchPositions} setSearchPositions={setSearchPositions} />
 
     <NextSearch
       setSearchPositions={(pos: ICatalogPosition[]) => setSearchPositions([...searchPositions, ...pos])}

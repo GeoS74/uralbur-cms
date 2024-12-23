@@ -11,7 +11,11 @@ export default function CatalogPositionPage() {
   return <>
     <BackArrow path={"/catalog/positions"} />
     <div className={classNames(styles.root, "card")}>
-      <OptionalHeader {...s} />
+      <OptionalHeader
+        id={s.id}
+        createdAt={s.createdAt}
+        _updatePositions={() => true} // читай про эту функцию в readme к компоненте CatalogPosition
+      />
 
       <div className={classNames(styles.nested)}>
         <div>

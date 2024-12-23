@@ -3,22 +3,35 @@ import serviceHost from "../../../libs/service.host"
 import CatalogPositionOptionalHeader from "../CatalogPositionOptionalHeader/CatalogPositionOptionalHeader"
 
 type Props = {
+  setSearchPositions: React.Dispatch<React.SetStateAction<ICatalogPosition[]>>
   positions: ICatalogPosition[]
 }
 
-export default function CatalogPositionPane({ positions }: Props) {
+export default function CatalogPositionPane({ positions, setSearchPositions }: Props) {
   return positions?.length ?
 
     <div className={styles.root}>
-      {_makeList(positions)}
+      {_makeList(positions, setSearchPositions)}
     </div> : <div>позиции отсутствуют</div>
 }
 
-function _makeList(positions: ICatalogPosition[]) {
+function _makeList(
+  positions: ICatalogPosition[],
+  setSearchPositions: React.Dispatch<React.SetStateAction<ICatalogPosition[]>>
+) {
   return positions
-    .map((s) => <div key={s.id} className="card mt-0">
+    .map((s, index) => <div key={s.id} className="card mt-0">
 
-      <CatalogPositionOptionalHeader {...s} />
+      <CatalogPositionOptionalHeader
+        id={s.id}
+        createdAt={s.createdAt}
+
+        _updatePositions={() => { // читай про эту функцию в readme к компоненте CatalogPosition
+          positions.splice(index, 1);
+          setSearchPositions([...positions]); // обязательно прокидывать изменение массива так, а не ссылкой на старый массив
+          return false; // возврат false проигнорирует вызов navigate(...)
+        }}
+      />
 
       <div>
         <div>
