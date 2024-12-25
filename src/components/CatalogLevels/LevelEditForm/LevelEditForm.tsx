@@ -14,11 +14,10 @@ import InputText from "./InputText/InputText";
 import InputFile from "./InputFile/InputFile";
 import BackArrow from "../../BackArrow/BackArrow";
 import SelectPane from "./SelectPane/SelectPane";
+import Image from "./Image/Image";
 
 export default function LevelEditForm() {
-  const [level, levels] = useLoaderData() as [ICatalogLevel | undefined, ICatalogLevel[]];
-
-  const [currentLevel, setCurrentLevel] = useState(level);
+  const [currentLevel, levels] = useLoaderData() as [ICatalogLevel | undefined, ICatalogLevel[]];
 
   const [disabled, setDisabled] = useState(false);
   const [errorMessage, setErrorResponse] = useState<IErrorMessage>();
@@ -42,15 +41,7 @@ export default function LevelEditForm() {
 
         <legend className="mt-3">{!currentLevel ? "Добавление нового раздела" : "Изменение раздела"}</legend>
         
-        {currentLevel?.image?.fileName ?
-          <div className="mt-2">  
-            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${currentLevel?.image?.fileName}`} loading="lazy" />
-            <span
-            onClick={() => _deleteImage(currentLevel.id, setCurrentLevel)}
-            >удалить изображение</span>
-          </div>
-          : <></>}
-          
+        <Image image={currentLevel?.image?.fileName ? currentLevel?.image : undefined} />
  
         <InputFile errorMessage={errorMessage} prefix="image" />
 
@@ -129,30 +120,4 @@ function _getErrorResponse(error: string): IErrorMessage {
       return { field: "image", message: "изображение не загружено" }
     default: return { field: "title", message: error }
   }
-}
-
-async function _deleteImage(id: string, setCurrentLevel: React.Dispatch<React.SetStateAction<ICatalogLevel | undefined>>) {
-  if (!confirm('Удалить изображение?')) {
-    return false;
-  }
-
-  return fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/level/image/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${tokenManager.getAccess()}`
-    }
-  }))
-    .then(responseNotIsArray)
-    .then(async response => {
-      if (response.ok) {
-        const res = await response.json();
-        setCurrentLevel(res)
-        return true;
-      }
-      throw new Error(`response status: ${response.status}`)
-    })
-    .catch(error => {
-      console.log(error.message);
-      return false;
-    })
 }

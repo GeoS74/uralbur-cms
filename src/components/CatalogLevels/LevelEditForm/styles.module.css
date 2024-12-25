@@ -13,10 +13,6 @@
   color: var(--color);
 }
 
-.root img {
-  width: 100px;
-}
-
 .root input[type=submit] {
   margin-right: 10px;
 }
