@@ -275,6 +275,7 @@ interface IInfoBlock {
 interface ICatalogLevel {
   id: string
   title: string
+  image: IImage
   parent: string | null
   createdAt: string
   updatedAt: string

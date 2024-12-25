@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
+import serviceHost from "../../../../libs/service.host"
 import { ReactComponent as IconUpRow } from "../icons/caret-up.svg"
 import OptionalButton from "../OptionalButton/OptionalButton";
 import LevelUL from "../LevelUL/LevelUL";
@@ -13,7 +14,7 @@ export default function LevelLi({ level }: props) {
   const [ulHidden, setUlHidden] = useState(false);
   const [showOptionalButton, setShowOptionalButton] = useState(false);
 
-  return <li
+  return <li className={styles.root}
     onClick={(e) => {
       setUlHidden(!ulHidden)
       e.stopPropagation(); // обязательно: остановка всплытия события
@@ -23,7 +24,8 @@ export default function LevelLi({ level }: props) {
       onMouseEnter={() => setShowOptionalButton(true)}
       onMouseLeave={() => setShowOptionalButton(false)}
     >
-      {level.title}
+      <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${level.image.fileName}`} loading="lazy" />
+      <span>{level.title}</span>
       {level.childs.length ? <IconUpRow className={classNames(styles.svgRow, (ulHidden ? styles.rotate : ''))}
       /> : <></>}
 

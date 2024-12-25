@@ -11,6 +11,7 @@ import CancelButton from "./CancelButton/CancelButton";
 import SubmitButton from "./SubmitButton/SubmitButton";
 import OptionalHeader from "./OptionalHeader/OptionalHeader";
 import InputText from "./InputText/InputText";
+import InputFile from "./InputFile/InputFile";
 import BackArrow from "../../BackArrow/BackArrow";
 import SelectPane from "./SelectPane/SelectPane";
 
@@ -38,6 +39,14 @@ export default function LevelEditForm() {
         <OptionalHeader createdAt={currentLevel?.createdAt} />
 
         <legend className="mt-3">{!currentLevel ? "Добавление нового раздела" : "Изменение раздела"}</legend>
+
+        {currentLevel ?
+          <div className="mt-2">
+            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${currentLevel?.image?.fileName}`} loading="lazy" />
+          </div>
+          : <></>}
+
+        <InputFile errorMessage={errorMessage} prefix="image" />
 
         <InputText errorMessage={errorMessage} val={currentLevel?.title} prefix="title" label="Заголовок" />
 
@@ -69,8 +78,12 @@ function _onSubmit(
   setDisabled(true);
 
   const fd = new FormData(event.currentTarget);
-  if(!fd.get('parent')) {
+  if (!fd.get('parent')) {
     fd.delete('parent')
+  }
+
+  if ((fd.get('image') as File).size == 0) {
+    fd.delete('image')
   }
 
   fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/level/${level?.id || ''}`, {
@@ -104,6 +117,10 @@ function _getErrorResponse(error: string): IErrorMessage {
       return { field: "parent", message: "Раздела не существует" }
     case `cannot be subordinated to oneself or nested level`:
       return { field: "parent", message: "Раздела не может быть подчинён себе или дочернему элементу" }
+    case `bad image mime type`:
+      return { field: "image", message: "Файл должен быть картинкой" }
+    case `field name "image" is empty`:
+      return { field: "image", message: "изображение не загружено" }
     default: return { field: "title", message: error }
   }
 }

@@ -1,9 +1,18 @@
 .root {
 }
+.root img{
+  width: 50px;
+  margin-right: 15px;
+}
+
+.root span{
+  font-size: 1.5em;
+}
+
 .root ul li {
   margin: 15px 0;
 }
-
+ 
 .root ul li:hover {
   cursor: pointer;
 }
