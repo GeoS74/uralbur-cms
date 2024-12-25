@@ -24,7 +24,11 @@ export default function LevelLi({ level }: props) {
       onMouseEnter={() => setShowOptionalButton(true)}
       onMouseLeave={() => setShowOptionalButton(false)}
     >
-      <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${level.image.fileName}`} loading="lazy" />
+
+      {level?.image?.fileName ?
+        <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${level.image.fileName}`} loading="lazy" />
+        : <></>}
+
       <span>{level.title}</span>
       {level.childs.length ? <IconUpRow className={classNames(styles.svgRow, (ulHidden ? styles.rotate : ''))}
       /> : <></>}

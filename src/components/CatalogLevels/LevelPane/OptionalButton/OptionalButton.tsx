@@ -28,7 +28,7 @@ async function _deleteLevel(id: string) {
     return false;
   }
 
-  return fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/level/${id}`, {
+  return fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/level/level/${id}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
