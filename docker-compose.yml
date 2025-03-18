@@ -26,7 +26,7 @@ services:
       - POSTGRES_USER=mauth
       - POSTGRES_DB=mauth
   mcontent_app:
-    image: "geos74/mcontent:0.0.1"
+    image: "geos74/mcontent:0.0.2"
     environment:
       - NODE_ENV=dev
       - SERVER_PORT=3020
@@ -50,7 +50,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=passwordXXX
       - MONGO_INITDB_DATABASE=admin
   uralbur:
-    image: "geos74/uralbur-cms:0.0.1"
+    image: "geos74/uralbur-cms:0.0.2"
     ports:
       - "8080:80"
     volumes:
