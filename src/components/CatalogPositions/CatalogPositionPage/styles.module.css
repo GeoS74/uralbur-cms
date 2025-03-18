@@ -39,3 +39,21 @@ pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+.pdftest {
+  /* display: block; */
+  /* background-color: red; */
+  /* border: solid 10px grey; */
+  height: 500px;
+  /* width: 300px; */
+  overflow: hidden;
+}
+
+.pdfpage {
+  width: 100%
+  /* background-color: red; */
+  /* border: solid 10px grey; */
+  /* height: 500px; */
+  /* width: 300px; */
+  /* overflow: hidden; */
+}

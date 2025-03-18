@@ -18,6 +18,7 @@ import CheckBox from "./CheckBox/CheckBox";
 import SelectPane from "./SelectPane/SelectPane";
 import TextArea from "./TextArea/TextArea";
 import Image from "./Image/Image";
+import PDF from "./PDF/PDF";
 
 
 export default function SlideEditForm() {
@@ -48,7 +49,7 @@ export default function SlideEditForm() {
         <Image image={position?.files?.image?.fileName ? position?.files?.image : undefined} />
 
         <InputFile errorMessage={errorMessage} prefix="image" />
-      
+
         <SelectPane
           errorMessage={errorMessage}
           levels={levels}
@@ -61,6 +62,8 @@ export default function SlideEditForm() {
         <InputText errorMessage={errorMessage} val={position?.article} prefix="article" label="Артикл" />
 
         <TextArea errorMessage={errorMessage} val={position?.description} prefix="description" label="Описание" />
+
+        <PDF pdf={position?.files?.pdf?.fileName ? position?.files?.pdf : undefined} />
 
         <InputPDF errorMessage={errorMessage} prefix="pdf" />
 
@@ -87,7 +90,6 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
-  console.log(fd)
   if ((fd.get('image') as File).size == 0) {
     fd.delete('image')
   }
@@ -110,7 +112,7 @@ function _onSubmit(
         return navigate(`/catalog/positions/page/${res.id}`)
       }
       else if (response.status === 400) {
-        const res = await response.json()
+        const res = await response.json();
         setErrorResponse(_getErrorResponse(res.error))
         return;
       }
@@ -130,6 +132,8 @@ function _getErrorResponse(error: string): IErrorMessage {
       return { field: "image", message: "Файл должен быть картинкой" }
     case `field name "image" is empty`:
       return { field: "image", message: "изображение не загружено" }
+    case `bad pdf mime type`:
+      return { field: "pdf", message: "Файл должен быть pdf" }
     default: return { field: "image", message: error }
   }
 }

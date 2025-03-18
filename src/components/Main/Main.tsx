@@ -1,11 +1,11 @@
 import Navigate from "../navigate/Navigate"
-import { useLoaderData } from "react-router-dom";
+// import { useLoaderData } from "react-router-dom";
 // import logo from "../navigate/image/logo.svg"
-import Head from "../Head/Head";
-import Slider from "../Slider/Slider"
-import SearchForm from "./SearchForm/SearchForm"
-import Text from "./Text/Text"
-import Footer from "../Footer/Footer"
+// import Head from "../Head/Head";
+// import Slider from "../Slider/Slider"
+// import SearchForm from "./SearchForm/SearchForm"
+// import Text from "./Text/Text"
+// import Footer from "../Footer/Footer"
 import styles from "./styles.module.css"
 
 export default function Main() {
