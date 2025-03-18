@@ -288,7 +288,10 @@ interface ICatalogPosition {
   article: string
   description: string
   isPublic: boolean
-  image: IImage
+  files: {
+    image: IImage,
+    pdf: IImage
+  }
   level: {
     id: string
     title: string

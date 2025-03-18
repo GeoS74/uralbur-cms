@@ -13,9 +13,11 @@ import OptionalHeader from "./OptionalHeader/OptionalHeader";
 import InputText from "./InputText/InputText";
 import BackArrow from "../../BackArrow/BackArrow";
 import InputFile from "./InputFile/InputFile";
+import InputPDF from "./InputPDF/InputPDF"
 import CheckBox from "./CheckBox/CheckBox";
 import SelectPane from "./SelectPane/SelectPane";
 import TextArea from "./TextArea/TextArea";
+import Image from "./Image/Image";
 
 
 export default function SlideEditForm() {
@@ -43,16 +45,10 @@ export default function SlideEditForm() {
 
         <legend className="mt-3">{!position ? "Добавление новой позиции" : "Изменение позиции"}</legend>
 
-        {/* <small className="text-danger">ВАЖНО: Размер изображения должен быть 1900х900 px</small> */}
-
-        {position ?
-          <div className="mt-2">
-            <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${position?.image?.fileName}`} loading="lazy" />
-          </div>
-          : <></>}
+        <Image image={position?.files?.image?.fileName ? position?.files?.image : undefined} />
 
         <InputFile errorMessage={errorMessage} prefix="image" />
-
+      
         <SelectPane
           errorMessage={errorMessage}
           levels={levels}
@@ -65,6 +61,8 @@ export default function SlideEditForm() {
         <InputText errorMessage={errorMessage} val={position?.article} prefix="article" label="Артикл" />
 
         <TextArea errorMessage={errorMessage} val={position?.description} prefix="description" label="Описание" />
+
+        <InputPDF errorMessage={errorMessage} prefix="pdf" />
 
         <CheckBox val={position?.isPublic === undefined ? true : position.isPublic} prefix="isPublic" label="Отображается" />
 
@@ -89,8 +87,13 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
+  console.log(fd)
   if ((fd.get('image') as File).size == 0) {
     fd.delete('image')
+  }
+
+  if ((fd.get('pdf') as File).size == 0) {
+    fd.delete('pdf')
   }
 
   fetchWrapper(() => fetch(`${serviceHost('mcontent')}/api/mcontent/catalog/position/${position?.id || ''}`, {

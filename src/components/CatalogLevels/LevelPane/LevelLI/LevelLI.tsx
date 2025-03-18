@@ -26,7 +26,7 @@ export default function LevelLi({ level }: props) {
     >
 
       {level?.image?.fileName ?
-        <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${level.image.fileName}`} loading="lazy" />
+        <img src={`${serviceHost('mcontent')}/api/mcontent/static/catalog/level/images/${level.image.fileName}`} loading="lazy" />
         : <></>}
 
       <span>{level.title}</span>

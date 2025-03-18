@@ -10,7 +10,7 @@ export default function Image({image}: Props) {
   const [currentImage, setCurrentImage] = useState(image);
 
   return currentImage ? <div className={classNames(styles.root, "mt-4")}> 
-      <img src={`${serviceHost('mcontent')}/api/mcontent/static/images/catalog/${currentImage.fileName}`} loading="lazy" />
+      <img src={`${serviceHost('mcontent')}/api/mcontent/static/catalog/level/images/${currentImage.fileName}`} loading="lazy" />
       <small
       onClick={() => setCurrentImage(undefined)}
       >удалить изображение</small>
