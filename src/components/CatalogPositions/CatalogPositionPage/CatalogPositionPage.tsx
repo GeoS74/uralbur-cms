@@ -14,7 +14,15 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { Document, Page, pdfjs } from 'react-pdf';
 
-pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@4.8.69/build/pdf.worker.min.mjs';
+// pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@4.8.69/build/pdf.worker.min.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = '/libs/pdfjs-dist@4.8.69/build/pdf.worker.min.mjs';
+
+// const url = new URL(
+//   "../../../libs/pdf.worker.min.ts",
+//   import.meta.url,
+// ).toString();
+// console.log(url)
+// pdfjs.GlobalWorkerOptions.workerSrc =  url;
 
 
 export default function CatalogPositionPage() {
