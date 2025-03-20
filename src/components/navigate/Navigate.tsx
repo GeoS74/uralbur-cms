@@ -74,8 +74,9 @@ export default function Navigate() {
                     <li className="nav-item dropdown">
                       <span className="nav-link dropdown-toggle" onClick={(event) => event.currentTarget.nextElementSibling?.classList.toggle("show")}>Каталог</span>
                       <div className="dropdown-menu" onClick={(event) => event.currentTarget.classList.toggle("show")}>
-                      <Link to="/catalog/positions" className="dropdown-item">Позиции</Link>
                         <Link to="/catalog/levels" className="dropdown-item">Разделы</Link>
+                        <Link to="/catalog/positions" className="dropdown-item">Позиции</Link>
+
                         {/* <hr />
                       <Link to="/catalog/edit/upload" className="dropdown-item">Загрузка прайса</Link> */}
                       </div>

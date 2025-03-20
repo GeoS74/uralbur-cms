@@ -12,6 +12,7 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import OptionalHeader from "./OptionalHeader/OptionalHeader";
 import InputText from "./InputText/InputText";
 import InputFile from "./InputFile/InputFile";
+import TextArea from "./TextArea/TextArea";
 import BackArrow from "../../BackArrow/BackArrow";
 import SelectPane from "./SelectPane/SelectPane";
 import Image from "./Image/Image";
@@ -47,6 +48,8 @@ export default function LevelEditForm() {
 
         <InputText errorMessage={errorMessage} val={currentLevel?.title} prefix="title" label="Заголовок" />
 
+        <TextArea errorMessage={errorMessage} val={currentLevel?.description} prefix="description" label="Описание" />
+        
         <SelectPane errorMessage={errorMessage}
           levels={levels}
           parentId={currentLevel?.parent}
