@@ -41,15 +41,15 @@ export default function LevelEditForm() {
         <OptionalHeader createdAt={currentLevel?.createdAt} />
 
         <legend className="mt-3">{!currentLevel ? "Добавление нового раздела" : "Изменение раздела"}</legend>
-        
+
         <Image image={currentLevel?.image?.fileName ? currentLevel?.image : undefined} />
- 
+
         <InputFile errorMessage={errorMessage} prefix="image" />
 
         <InputText errorMessage={errorMessage} val={currentLevel?.title} prefix="title" label="Заголовок" />
 
         <TextArea errorMessage={errorMessage} val={currentLevel?.description} prefix="description" label="Описание" />
-        
+
         <SelectPane errorMessage={errorMessage}
           levels={levels}
           parentId={currentLevel?.parent}
@@ -113,6 +113,8 @@ function _getErrorResponse(error: string): IErrorMessage {
   switch (error) {
     case `title is empty`:
       return { field: "title", message: "Название уровня не может быть пустым" };
+    case `value not unique`:
+      return { field: "title", message: "Раздел с таким названием уже существует" };
     case `parent not exists`:
       return { field: "parent", message: "Раздела не существует" }
     case `cannot be subordinated to oneself or nested level`:

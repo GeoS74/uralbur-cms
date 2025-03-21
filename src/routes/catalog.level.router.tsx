@@ -67,7 +67,7 @@ function _getSearch() {
 }
 
 function _getLevel(id?: string) {
-  return fetch(`${serviceHost("mcontent")}/api/mcontent/catalog/level/public/${id || ''}`, {
+  return fetch(`${serviceHost("mcontent")}/api/mcontent/catalog/level/${id || ''}`, {
     headers: {
       'Authorization': `Bearer ${tokenManager.getAccess()}`
     }
