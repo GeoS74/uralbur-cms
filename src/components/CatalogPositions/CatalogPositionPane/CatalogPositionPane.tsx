@@ -1,8 +1,12 @@
+import { Converter } from "md-conv";
+import { Link } from "react-router-dom";
 import styles from "./styles.module.css"
 import serviceHost from "../../../libs/service.host"
 import CatalogPositionOptionalHeader from "../CatalogPositionOptionalHeader/CatalogPositionOptionalHeader"
 import { ReactComponent as DefaultImg } from "../image/file-earmark-image.svg"
 import { useNavigate, NavigateFunction } from "react-router-dom"
+
+const converter = new Converter();
 
 type Props = {
   setSearchPositions: React.Dispatch<React.SetStateAction<ICatalogPosition[]>>
@@ -47,11 +51,17 @@ function _makeList(
           }
         </div>
 
-         
 
-        {s.title ? <div><h5>{s.title}</h5></div> : <></>}
+
+        {s.title ? <div><h3>{s.title}</h3></div> : <></>}
         {s.article ? <div><h5>{s.article}</h5></div> : <></>}
-        {s.description ? <div>описание:<pre>{s.description}</pre></div> : <></>}
+        {s.description ? <>
+          <div
+            dangerouslySetInnerHTML={{ __html: converter.markdownToHTML(_cut(s.description, 250)) }}
+          ></div>
+          <div>{(s.description.length > 350) ? <Link to={`/catalog/positions/page/${s.id}`} className="nav-link">Читать полностью...</Link> : <></>}
+          </div>
+        </> : <></>}
 
 
 
@@ -68,4 +78,8 @@ function _makeList(
       </div>
 
     </div>)
+}
+
+function _cut(text: string, limit?: number) {
+  return (limit && text.length > limit) ? text.substring(0, text.indexOf(".", limit) + 1) : text;
 }

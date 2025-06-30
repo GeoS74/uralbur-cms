@@ -1,14 +1,14 @@
+import { Converter } from "md-conv";
+
 import { useLoaderData } from "react-router-dom"
 import serviceHost from "../../../libs/service.host"
 import classNames from "classnames";
 import styles from "./styles.module.css"
 import BackArrow from "../../BackArrow/BackArrow";
 import OptionalHeader from "../CatalogPositionOptionalHeader/CatalogPositionOptionalHeader";
-import { ReactComponent as DefaultImg } from "../image/file-earmark-image.svg"
+import { ReactComponent as DefaultImg } from "../image/file-earmark-image.svg";
 
-
-
-
+const converter = new Converter();
 
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -48,9 +48,11 @@ export default function CatalogPositionPage() {
 
 
         {s.level.title ? <div>раздел каталога: {s.level.title}</div> : <></>}
-        {s.title ? <div><h5>{s.title}</h5></div> : <></>}
+        {s.title ? <div><h3>{s.title}</h3></div> : <></>}
         {s.article ? <div><h5>{s.article}</h5></div> : <></>}
-        {s.description ? <div>описание:<pre>{s.description}</pre></div> : <></>}
+        {s.description ? <div
+          dangerouslySetInnerHTML={{ __html: converter.markdownToHTML(s.description) }}
+        ></div> : <></>}
 
         {/* <a href={`${serviceHost('mcontent')}/api/mcontent/static/catalog/position/pdf/${s.files.pdf.fileName}`}>pdf</a> */}
 
@@ -61,34 +63,19 @@ export default function CatalogPositionPage() {
 
 
         {/* <div className={classNames(styles.pdftest)}> */}
-          <Document
-          
-            //  renderMode="canvas"
+        <Document
+          file={`${serviceHost('mcontent')}/api/mcontent/static/catalog/position/pdf/${s.files.pdf.fileName}`}
+        // onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <Page
 
-            onClick={() => {
-              // location.href = `${serviceHost('mcontent')}/api/mcontent/static/catalog/position/pdf/${s.files.pdf.fileName}`
-              // console.log('click')
-
-              // window.open(
-              //   `${serviceHost('mcontent')}/api/mcontent/static/catalog/position/pdf/${s.files.pdf.fileName}`,
-              //   '_blank' // <- This is what makes it open in a new window.
-              // );
-              
-            }}
-
-
-            file={`${serviceHost('mcontent')}/api/mcontent/static/catalog/position/pdf/${s.files.pdf.fileName}`}
-          // onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <Page
-             
             // className={classNames(styles.pdfpage)}
-              // width={500}
-              scale={1}
-              // inputRef={(ref) => {console.log(ref)}}
-              //  devicePixelRatio={5}
-              pageNumber={1} />
-          </Document>
+            // width={500}
+            scale={1}
+            // inputRef={(ref) => {console.log(ref)}}
+            //  devicePixelRatio={5}
+            pageNumber={1} />
+        </Document>
         {/* </div> */}
 
 
