@@ -42,7 +42,7 @@ export default function NoteEditForm() {
 
         <legend className="mt-3">{!note ? "Добавление новой статьи" : "Изменение статьи"}</legend>
 
-        <small className="text-danger">ВАЖНО: Размер изображения должен быть 1900х900 px</small>
+        {/* <small className="text-danger">ВАЖНО: Размер изображения должен быть 1900х900 px</small> */}
 
         {note ?
           <div className="mt-2">
@@ -50,7 +50,7 @@ export default function NoteEditForm() {
           </div>
           : <></>}
 
-        <InputFile errorMessage={errorMessage} prefix="image"/>
+        <InputFile errorMessage={errorMessage} prefix="image" />
 
         <InputText errorMessage={errorMessage} val={note?.title} prefix="title" label="Заголовок" />
 
@@ -79,7 +79,7 @@ function _onSubmit(
 
   const fd = new FormData(event.currentTarget);
 
-  if((fd.get('image') as File).size == 0) {
+  if ((fd.get('image') as File).size == 0) {
     fd.delete('image')
   }
 
@@ -109,8 +109,12 @@ function _onSubmit(
 
 function _getErrorResponse(error: string): IErrorMessage {
   switch (error) {
-    case `field name "image" is empty`:
-      return { field: "image", message: "Изображение не загаружено" }
+    case `title is empty`:
+      return { field: "title", message: "Название не может быть пустым" }
+    case `image not uploaded`:
+      return { field: "image", message: "Изображение не загружено" }
+    case `value not unique`:
+      return { field: "title", message: "Название должно быть уникальным" }
     case `bad image mime type`:
       return { field: "image", message: "Файл должен быть картинкой" }
     default: return { field: "image", message: error }
