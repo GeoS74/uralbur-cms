@@ -41,7 +41,7 @@ export default function EditForm() {
         <InputText val={template?.meta?.description} prefix="meta[description]" label="Meta-тег description" />
 
         {
-          ["index", "product-single"].indexOf(template.alias) === -1 ?
+          ["index", "product-single", "simple-article"].indexOf(template.alias) === -1 ?
             <>
               <InputText val={template?.title} prefix="title" label="Заголовок" />
               <InputText val={template?.description} prefix="description" label="Текст" />

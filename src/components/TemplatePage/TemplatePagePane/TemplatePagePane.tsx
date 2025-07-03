@@ -25,7 +25,7 @@ function _makeList(templates: ITempatePage[]) {
         <div>Meta-тег description: {s.meta.description}</div>
 
         {
-          ["index", "product-single"].indexOf(s.alias) === -1 ?
+          ["index", "product-single", "simple-article"].indexOf(s.alias) === -1 ?
             <>
                <div>Заголовок: {s.title}</div>
                <div>Текст: {s.description}</div>
