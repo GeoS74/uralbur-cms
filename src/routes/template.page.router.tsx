@@ -10,6 +10,7 @@ import TemplatePage from "../components/TemplatePage/TemplatePage";
 import TemplateList from "../components/TemplatePage/TemplateList/TemplateList";
 import TemplatePageEditForm from "../components/TemplatePage/TemplatePageEditForm/TemplatePageEditForm"
 import TemplatePageOne from "../components/TemplatePage/TemplatePageOne/TemplatePageOne"
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/template",
@@ -18,13 +19,17 @@ export default {
     {
       index: true,
       element: <TemplateList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/template/page/:alias",
       element: <TemplatePageOne />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _get(params.alias))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _get(params.alias)))
+        // .fetchWrapper(() => _get(params.alias))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -38,7 +43,8 @@ export default {
     {
       path: "/template/page/edit/:alias",
       element: <TemplatePageEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _get(params.alias))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _get(params.alias)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {

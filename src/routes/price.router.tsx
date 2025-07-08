@@ -8,7 +8,8 @@ import session from "../libs/token.manager";
 
 import Price from "../components/Price/Price";
 import PricePage from "../components/Price/PricePage/PricePage";
-import PriceEditForm from "../components/Price/PriceEditForm/PriceEditForm"
+import PriceEditForm from "../components/Price/PriceEditForm/PriceEditForm";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/price",
@@ -17,7 +18,8 @@ export default {
     {
       index: true,
       element: <PricePage />,
-      loader: () => fetchWrapper(_getPrice)
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getPrice))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -31,7 +33,8 @@ export default {
     {
       path: "/price/edit",
       element: <PriceEditForm />,
-      loader: () => fetchWrapper(_getPrice)
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getPrice))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {

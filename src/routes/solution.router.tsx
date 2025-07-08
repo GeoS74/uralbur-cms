@@ -8,8 +8,9 @@ import session from "../libs/token.manager";
 
 import Solution from "../components/Solution/Solution";
 import SolutionList from "../components/Solution/SolutionList/SolutionList";
-import SolutionEditForm from "../components/Solution/SolutionEditForm/SolutionEditForm"
-import SolutionPage from "../components/Solution/SolutionPage/SolutionPage"
+import SolutionEditForm from "../components/Solution/SolutionEditForm/SolutionEditForm";
+import SolutionPage from "../components/Solution/SolutionPage/SolutionPage";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/solutions",
@@ -18,13 +19,16 @@ export default {
     {
       index: true,
       element: <SolutionList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/solutions/page/:id",
       element: <SolutionPage />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -38,12 +42,16 @@ export default {
     {
       path: "/solutions/create",
       element: <SolutionEditForm />,
-      loader: () => session.start(),
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
     },
     {
       path: "/solutions/edit/:id",
       element: <SolutionEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {

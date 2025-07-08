@@ -10,6 +10,7 @@ import CatalogPositions from "../components/CatalogPositions/CatalogPositions";
 import CatalogPositionList from "../components/CatalogPositions/CatalogPositionList/CatalogPositionList";
 import CatalogPositionEditForm from "../components/CatalogPositions/CatalogPositionEditForm/CatalogPositionEditForm";
 import CatalogPositionPage from "../components/CatalogPositions/CatalogPositionPage/CatalogPositionPage";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/catalog/positions",
@@ -18,7 +19,8 @@ export default {
     {
       index: true,
       element: <CatalogPositionList />,
-      loader: () => fetchWrapper([_getSearch, _getLevels])
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper([_getSearch, _getLevels]))
         .then(response => {
           if (Array.isArray(response)) {
             return Promise.all(response.map(async r => await r.json()))
@@ -30,7 +32,8 @@ export default {
     {
       path: "/catalog/positions/page/:id",
       element: <CatalogPositionPage />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getPosition(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getPosition(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -38,27 +41,30 @@ export default {
           }
           return res;
         })
-        // .catch(() => redirect('/auth'))
+        .catch(() => redirect('/auth'))
         .finally(() => session.start())
     },
     {
       path: "/catalog/positions/create",
       element: <CatalogPositionEditForm />,
-      loader: () => fetchWrapper(_getLevels)
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getLevels))
         .then(responseNotIsArray)
         .then(async response => {
           const res = await response.json();
           return [undefined, res]
         })
+        .catch(() => redirect('/auth'))
         .finally(() => session.start()),
     },
     {
       path: "/catalog/positions/edit/:id",
       element: <CatalogPositionEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper([
-        () => _getPosition(params.id),
-        () => _getLevels()
-      ])
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper([
+          () => _getPosition(params.id),
+          () => _getLevels()
+        ]))
         .then(res => {
           if (Array.isArray(res)) {
             if (res[0].status === 404) {

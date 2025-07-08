@@ -10,6 +10,7 @@ import Testimonial from "../components/Testimonial/Testimonial";
 import TestimonialList from "../components/Testimonial/TestimonialList/TestimonialList";
 import TestimonialEditForm from "../components/Testimonial/TestimonialEditForm/TestimonialEditForm"
 import TestimonialPage from "../components/Testimonial/TestimonialPage/TestimonialPage"
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/testimonial",
@@ -18,42 +19,46 @@ export default {
     {
       index: true,
       element: <TestimonialList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch)).catch(() => redirect('/auth'))
         .finally(() => session.start())
     },
-      {
-        path: "/testimonial/page/:id",
-        element: <TestimonialPage />,
-        loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTestimonial(params.id))
-          .then(responseNotIsArray)
-          .then(res => {
-            if (res.status === 404) {
-              return redirect('/testimonial')
-            }
-            return res;
-          })
-          .catch(() => redirect('/auth'))
-          .finally(() => session.start())
-      },
-      {
-        path: "/testimonial/create",
-        element: <TestimonialEditForm />,
-        loader: () => session.start(),
-      },
-      {
-        path: "/testimonial/edit/:id",
-        element: <TestimonialEditForm />,
-        loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTestimonial(params.id))
-          .then(responseNotIsArray)
-          .then(res => {
-            if (res.status === 404) {
-              return redirect('/testimonial')
-            }
-            return res;
-          })
-          .catch(() => redirect('/auth'))
-          .finally(() => session.start())
-      },
+    {
+      path: "/testimonial/page/:id",
+      element: <TestimonialPage />,
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTestimonial(params.id))
+        .then(responseNotIsArray)
+        .then(res => {
+          if (res.status === 404) {
+            return redirect('/testimonial')
+          }
+          return res;
+        })
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
+    },
+    {
+      path: "/testimonial/create",
+      element: <TestimonialEditForm />,
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
+    },
+    {
+      path: "/testimonial/edit/:id",
+      element: <TestimonialEditForm />,
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTestimonial(params.id))
+        .then(responseNotIsArray)
+        .then(res => {
+          if (res.status === 404) {
+            return redirect('/testimonial')
+          }
+          return res;
+        })
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
+    },
   ]
 }
 

@@ -10,6 +10,7 @@ import Team from "../components/Team/Team";
 import TeamList from "../components/Team/TeamList/TeamList";
 import TeamEditForm from "../components/Team/TeamEditForm/TeamEditForm";
 import TeamPage from "../components/Team/TeamPage/TeamPage";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/team",
@@ -18,42 +19,49 @@ export default {
     {
       index: true,
       element: <TeamList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
         .finally(() => session.start())
     },
-      {
-        path: "/team/page/:id",
-        element: <TeamPage />,
-        loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTeamUnit(params.id))
-          .then(responseNotIsArray)
-          .then(res => {
-            if (res.status === 404) {
-              return redirect('/team')
-            }
-            return res;
-          })
-          .catch(() => redirect('/auth'))
-          .finally(() => session.start())
-      },
-      {
-        path: "/team/create",
-        element: <TeamEditForm />,
-        loader: () => session.start(),
-      },
-      {
-        path: "/team/edit/:id",
-        element: <TeamEditForm />,
-        loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getTeamUnit(params.id))
-          .then(responseNotIsArray)
-          .then(res => {
-            if (res.status === 404) {
-              return redirect('/team')
-            }
-            return res;
-          })
-          .catch(() => redirect('/auth'))
-          .finally(() => session.start())
-      },
+    {
+      path: "/team/page/:id",
+      element: <TeamPage />,
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getTeamUnit(params.id)))
+        .then(responseNotIsArray)
+        .then(res => {
+          if (res.status === 404) {
+            return redirect('/team')
+          }
+          return res;
+        })
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
+    },
+    {
+      path: "/team/create",
+      element: <TeamEditForm />,
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
+    },
+    {
+      path: "/team/edit/:id",
+      element: <TeamEditForm />,
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getTeamUnit(params.id)))
+        .then(responseNotIsArray)
+        .then(res => {
+          if (res.status === 404) {
+            return redirect('/team')
+          }
+          return res;
+        })
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
+    },
   ]
 }
 

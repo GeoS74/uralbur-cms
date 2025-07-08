@@ -9,6 +9,7 @@ import session from "../libs/token.manager";
 import CatalogLevels from "../components/CatalogLevels/CatalogLevels";
 import LevelList from "../components/CatalogLevels/LevelList/LevelList";
 import LevelEditForm from "../components/CatalogLevels/LevelEditForm/LevelEditForm";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/catalog/levels",
@@ -17,28 +18,32 @@ export default {
     {
       index: true,
       element: <LevelList />,
-      loader: () => fetchWrapper(_getSearch)
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
         .catch(() => redirect('/auth'))
         .finally(() => session.start())
     },
     {
       path: "/catalog/levels/create",
       element: <LevelEditForm />,
-      loader: () => fetchWrapper(_getSearch)
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
         .then(responseNotIsArray)
         .then(async response => {
           const res = await response.json();
           return [undefined, res]
         })
+        .catch(() => redirect('/auth'))
         .finally(() => session.start()),
     },
     {
       path: "/catalog/levels/edit/:id",
       element: <LevelEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper([
-        () => _getLevel(params.id),
-        () => _getSearch()
-      ])
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper([
+          () => _getLevel(params.id),
+          () => _getSearch()
+        ]))
         .then(res => {
           if (Array.isArray(res)) {
             if (res[0].status === 404) {

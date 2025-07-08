@@ -10,6 +10,7 @@ import MainSlider from "../components/MainSlider/MainSlider";
 import SlideList from "../components/MainSlider/SlideList/SlideList";
 import SlideEditForm from "../components/MainSlider/SlideEditForm/SlideEditForm"
 import SlidePage from "../components/MainSlider/SlidePage/SlidePage"
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/mainpage/slider",
@@ -18,8 +19,9 @@ export default {
     {
       index: true,
       element: <SlideList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch)).catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/mainpage/slider/page/:id",
@@ -38,7 +40,10 @@ export default {
     {
       path: "/mainpage/slider/create",
       element: <SlideEditForm />,
-      loader: () => session.start(),
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
     },
     {
       path: "/mainpage/slider/edit/:id",

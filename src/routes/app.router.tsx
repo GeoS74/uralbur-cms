@@ -4,9 +4,7 @@ import {
   redirect,
 } from "react-router-dom";
 
-import serviceHost from "../libs/service.host";
 import fetchWrapper from "../libs/fetch.wrapper";
-import tokenManager from "../libs/token.manager";
 import config from "../config";
 import Main from "../components/Main/Main";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
@@ -23,6 +21,7 @@ import teamRouter from "./team.router";
 import noteRouter from "./note.router";
 import catalogLevelRouter from "./catalog.level.router";
 import catalogPositionRouter from "./catalog.position.router";
+import { _getMe } from "../libs/auth.user";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +49,3 @@ const router = createBrowserRouter([
 })
 
 export default <RouterProvider router={router} />
-
-function _getMe() {
-  return fetch(`${serviceHost("mauth")}/api/mauth/access/`, {
-    headers: {
-      'Authorization': `Bearer ${tokenManager.getAccess()}`
-    }
-  })
-}
-

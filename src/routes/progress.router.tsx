@@ -8,8 +8,9 @@ import session from "../libs/token.manager";
 
 import Progress from "../components/Progress/Progress";
 import ProgressList from "../components/Progress/ProgressList/ProgressList";
-import ProgressEditForm from "../components/Progress/ProgressEditForm/ProgressEditForm"
-import ProgressPage from "../components/Progress/ProgressPage/ProgressPage"
+import ProgressEditForm from "../components/Progress/ProgressEditForm/ProgressEditForm";
+import ProgressPage from "../components/Progress/ProgressPage/ProgressPage";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/progress",
@@ -18,13 +19,16 @@ export default {
     {
       index: true,
       element: <ProgressList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/progress/page/:id",
       element: <ProgressPage />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -38,12 +42,16 @@ export default {
     {
       path: "/progress/create",
       element: <ProgressEditForm />,
-      loader: () => session.start(),
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
     },
     {
       path: "/progress/edit/:id",
       element: <ProgressEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {

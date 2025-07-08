@@ -8,7 +8,8 @@ import session from "../libs/token.manager";
 
 import Contact from "../components/Contact/Contact";
 import ContactList from "../components/Contact/ContactList/ContactList";
-import ContactEditForm from "../components/Contact/ContactEditForm/ContactEditForm"
+import ContactEditForm from "../components/Contact/ContactEditForm/ContactEditForm";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/contact",
@@ -17,13 +18,16 @@ export default {
     {
       index: true,
       element: <ContactList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/contact/edit/:alias",
       element: <ContactEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _get(params.alias))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _get(params.alias)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {

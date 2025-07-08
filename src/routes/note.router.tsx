@@ -10,6 +10,7 @@ import Note from "../components/Note/Note";
 import NoteList from "../components/Note/NoteList/NoteList";
 import NoteEditForm from "../components/Note/NoteEditForm/NoteEditForm";
 import NotePage from "../components/Note/NotePage/NotePage";
+import { _getMe } from "../libs/auth.user";
 
 export default {
   path: "/note",
@@ -18,13 +19,16 @@ export default {
     {
       index: true,
       element: <NoteList />,
-      loader: () => fetchWrapper(_getSearch).catch(() => redirect('/auth'))
-      .finally(() => session.start())
+      loader: () => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(_getSearch))
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start())
     },
     {
       path: "/note/page/:id",
       element: <NotePage />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
@@ -38,12 +42,16 @@ export default {
     {
       path: "/note/create",
       element: <NoteEditForm />,
-      loader: () => session.start(),
+      loader: () => fetchWrapper(_getMe)
+        .then(() => null)
+        .catch(() => redirect('/auth'))
+        .finally(() => session.start()),
     },
     {
       path: "/note/edit/:id",
       element: <NoteEditForm />,
-      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(() => _getSlide(params.id))
+      loader: ({ params }: LoaderFunctionArgs) => fetchWrapper(_getMe)
+        .then(() => fetchWrapper(() => _getSlide(params.id)))
         .then(responseNotIsArray)
         .then(res => {
           if (res.status === 404) {
